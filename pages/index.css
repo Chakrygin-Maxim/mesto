@@ -18,6 +18,15 @@
 @import url(../blocks/profile/__main-container/profile__main-container.css);
 @import url(../blocks/profile/__name-container/profile__name-container.css);
 
+@import url(../blocks/elements/elements.css);
+
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__button-like/element__button-like.css);
+@import url(../blocks/element/__info-name/element__info-name.css);
+@import url(../blocks/element/__info/element__info.css);
+@import url(../blocks/element/__photo/element__photo.css);
+@import url(../blocks/element/__photo-container/element__photo-container.css);
+
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__logo/footer__logo.css);
 
