@@ -8,6 +8,7 @@
     background-image: url(../../../images/__add-button.svg);
     background-repeat: no-repeat;
     background-position: center;
+    transition: opacity .15s ease-in;
 }
 
 .profile__button-add:hover {

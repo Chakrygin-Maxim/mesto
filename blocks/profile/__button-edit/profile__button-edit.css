@@ -8,6 +8,7 @@
     background-size: auto;
     background-color: black;
     border: 1px solid #fff;
+    transition: opacity .15s ease-in;
 } 
 
 .profile__button-edit:hover {
