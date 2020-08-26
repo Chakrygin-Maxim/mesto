@@ -10,7 +10,8 @@
     <title>Mesto - Russia</title>
     <link rel="stylesheet" href="./pages/index.css">
 </head>
- <body class="page"> 
+
+<body class="page">
 
     <header class="header">
         <a href="#" class="header__link">
@@ -18,10 +19,25 @@
         </a>
     </header>
 
+    <section class="profile">
+        <div class="profile__main-container">
+            <img src="./images/__image.jpg" alt="Аватар" class="profile__image">
+            <div class="profile__info">
+                <div class="profile__name-container">
+                    <h1 class="profile__name">Жак-Ив Кусто</h1>
+                    <button class="profile__button-edit"></button>
+                </div>
+                <p class="profile__description">Исследователь океана</p>
+            </div>
+        </div>
+        <button class="profile__button-add"></button>
+    </section>
+
     <footer class="footer">
         <img class="footer__logo" src="./images/__logo-footer.svg" alt="Дополнительное лого Mesto">
     </footer>
 
     <script src="./scripts/script.js"></script>
- </body> 
+</body>
+
 </html>
