@@ -1,6 +1,6 @@
 .popup__name {
-    margin: 54px 36px 0;
-    padding: 0 0 5px 0;
+    margin: 46px 0 0;
+    padding: 8px 0;
     min-width: 358px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
@@ -12,5 +12,6 @@
 }
 
 .popup__name:focus {
-    outline-color: rgba(0, 0, 0, .2);;
+    outline-color: rgba(0, 0, 0, .2);
+    ;
 }
