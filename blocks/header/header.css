@@ -8,7 +8,7 @@
     max-width: 882px;
 }
 
-header::after {
+.header::after {
     content: "";
     top: 0;
     left: 0;
