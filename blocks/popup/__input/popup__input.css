@@ -1,7 +1,7 @@
-.popup__job {
-    margin: 26px 0 0;
+.popup__input{
+    margin: 32px 0 0;
     padding: 8px 0;
-    min-width: 358px;
+    width: 100%;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, .2);
     font-style: normal;
@@ -11,6 +11,14 @@
     box-sizing: border-box;
 }
 
-.popup__job:focus {
+.popup__input:focus {
     outline-color: rgba(0, 0, 0, .2);
+}
+
+@media screen and (max-width:500px){
+    .popup__input{
+        font-size: 10px;
+        line-height: 12px;
+        margin: 20px 0 0;
+    }
 }
