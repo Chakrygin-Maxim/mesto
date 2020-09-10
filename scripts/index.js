@@ -77,11 +77,15 @@ const addCards = function (cardLink, name) {
     cardElement.querySelector('.element__info-name').textContent = name;
 
     const likeButton = cardElement.querySelector('.element__button-like');
-
     likeButton.addEventListener('click', evt => {
         const eventTarget = evt.target;
         eventTarget.classList.toggle('element__button-like_status_liked');
     });
+
+    const delButton = cardElement.querySelector('.element__button-trash');
+    delButton.addEventListener('click', evt => {
+        evt.target.parentElement.remove();
+    })
 
     cardsElements.append(cardElement);
 
