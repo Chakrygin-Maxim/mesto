@@ -75,8 +75,16 @@ const addCards = function (cardLink, name) {
     cardPhoto.alt = name;
 
     cardElement.querySelector('.element__info-name').textContent = name;
-    
+
+    const likeButton = cardElement.querySelector('.element__button-like');
+
+    likeButton.addEventListener('click', evt => {
+        const eventTarget = evt.target;
+        eventTarget.classList.toggle('element__button-like_status_liked');
+    });
+
     cardsElements.append(cardElement);
+
 };
 
 popup.addEventListener('click', popupCloseByClickOnOverlay);

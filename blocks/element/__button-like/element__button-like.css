@@ -7,11 +7,12 @@
     background-repeat: no-repeat;
     background-color: transparent;
     background-position: center;
-    transition: transform .15s ease-in;
+    transition: transform .15s ease-in, opacity .15s ease-in;
     outline: none;
 }
 
-.element__button-like:hover{
+.element__button-like:hover {
     transform: scale(1.2);
+    opacity: .6;
     cursor: pointer;
 }
