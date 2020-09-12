@@ -34,56 +34,14 @@
     </section>
 
     <main class="elements">
-        <article class="element">
-            <img src="./images/__element-karacha.jpg" alt="Карачаевск" class="element__photo">
-            <div class="element__info">
-                <h2 class="element__info-name">Карачаевск</h2>
-                <button class="element__button-like" type="button"></button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/__element-elbrus.jpg" alt="Эльбрус" class="element__photo">
-            <div class="element__info">
-                <h2 class="element__info-name">Гора Эльбрус</h2>
-                <button class="element__button-like" type="button"></button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/__element-dombai.jpg" alt="Домбай" class="element__photo">
-            <div class="element__info">
-                <h2 class="element__info-name">Домбай</h2>
-                <button class="element__button-like" type="button"></button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/__element-kaliningrad.jpg" alt="Калининград" class="element__photo">
-            <div class="element__info">
-                <h2 class="element__info-name">Калининград</h2>
-                <button class="element__button-like" type="button"></button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/__element-sheregesh.jpg" alt="Горы Шерегеш" class="element__photo">
-            <div class="element__info">
-                <h2 class="element__info-name">Шерегеш, Новокузнецк</h2>
-                <button class="element__button-like" type="button"></button>
-            </div>
-        </article>
-        <article class="element">
-            <img src="./images/__element-altay.jpg" alt="Алтайский край" class="element__photo">
-            <div class="element__info">
-                <h2 class="element__info-name">Алтай</h2>
-                <button class="element__button-like" type="button"></button>
-            </div>
-        </article>
     </main>
 
     <footer class="footer">
         <p class="footer__text">&copy; 2020 Mesto Russia</p>
     </footer>
 
-    <section class="popup">
-        <form class="popup__container" action="popup-submit" name="popup-editForm">
+    <section class="popup popup_form_profile">
+        <form class="popup__container" action="popup-profile-submit" name="popup-profile-submit">
             <h2 class="popup__title">Редактировать профиль</h2>
             <input id="name" name="name" type="text" class="popup__input popup__input_field_name" placeholder="Имя">
             <input id="job" name="job" type="text" class="popup__input popup__input_field_job" placeholder="О себе">
@@ -91,6 +49,35 @@
             <button class="popup__button-close" type="button"></button>
         </form>
     </section>
+
+    <section class="popup popup_form_mesto">
+        <form class="popup__container" action="popup-mesto-submit" name="popup-mesto-submit">
+            <h2 class="popup__title">Новое место</h2>
+            <input id="cardName" name="cardName" type="text" class="popup__input popup__input_field_cardName" placeholder="Название">
+            <input id="link" name="link" type="text" class="popup__input popup__input_field_link" placeholder="Ссылка на картинку">
+            <button type="submit" value="Создать" class="popup__submit">Создать</button>
+            <button class="popup__button-close" type="button"></button>
+        </form>
+    </section>
+
+    <section class="popup popup_form_photo">
+        <figure class="popup__image-container">
+            <img src="" alt="" class="popup__image">
+            <figcaption class="popup__caption"></figcaption>
+            <button class="popup__button-close" type="button"></button>
+        </figure>
+    </section>
+
+    <template id="element-template">
+        <article class="element">
+            <img class="element__photo">
+            <button class="element__button-trash"></button>
+            <div class="element__info">
+                <h2 class="element__info-name"></h2>
+                <button class="element__button-like" type="button"></button>
+            </div>
+        </article>
+    </template>
 
     <script src="./scripts/index.js"></script>
 </body>
