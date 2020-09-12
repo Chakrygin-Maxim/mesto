@@ -2,10 +2,14 @@
 // Определение переменных
 const popupProfile = document.querySelector('.popup_form_profile');
 const popupMesto = document.querySelector('.popup_form_mesto');
+const popupPhoto = document.querySelector('.popup_form_photo');
 const closeButtonProfile = popupProfile.querySelector('.popup__button-close');
 const closeButtonMesto = popupMesto.querySelector('.popup__button-close');
+const closeButtonPhoto = popupPhoto.querySelector('.popup__button-close');
 const popupProfileButton = popupProfile.querySelector('.popup__container');
 const popupMestoButton = popupMesto.querySelector('.popup__container');
+const popupImage = popupPhoto.querySelector('.popup__image');
+const popupPhotoCaption = popupPhoto.querySelector('.popup__caption'); 
 const nameInput = popupProfile.querySelector('.popup__input_field_name');
 const jobInput = popupProfile.querySelector('.popup__input_field_job');
 const cardNameInput = popupMesto.querySelector('.popup__input_field_cardName');
@@ -73,7 +77,7 @@ const editButtonOnClick = function () {
 const addButtonOnClick = function () {
     cardNameInput.value = '';
     linkInput.value = '';
-    
+
     renderPopup(popupMesto);
 };
 
@@ -103,7 +107,6 @@ const popupMestoSubmit = function (evt) {
 
 // Добавление карточки на форму
 const addCards = function (cardLink, name) {
-
     const cardTemplate = document.querySelector('#element-template').content;
     const cardElement = cardTemplate.cloneNode(true);
 
@@ -111,9 +114,20 @@ const addCards = function (cardLink, name) {
     cardPhoto.src = cardLink;
     cardPhoto.alt = name;
 
+    // Открытие popup c картинкой для просмотра
+    cardPhoto.addEventListener('click', evt =>{
+        
+        popupImage.src = evt.target.src;
+        popupImage.alt = evt.target.alt;
+        popupPhotoCaption.textContent = evt.target.alt;  
+
+        renderPopup(popupPhoto);
+    });
+    
     cardElement.querySelector('.element__info-name').textContent = name;
 
     const likeButton = cardElement.querySelector('.element__button-like');
+    // Нажатие кнопки like/dislike 
     likeButton.addEventListener('click', evt => {
         const eventTarget = evt.target;
         eventTarget.classList.toggle('element__button-like_status_liked');
@@ -130,10 +144,12 @@ const addCards = function (cardLink, name) {
 // Обработчики событий форм
 popupProfile.addEventListener('click', popupCloseByClickOnOverlay);
 popupMesto.addEventListener('click', popupCloseByClickOnOverlay);
+popupPhoto.addEventListener('click', popupCloseByClickOnOverlay);
 editButton.addEventListener('click', editButtonOnClick);
 addCardButton.addEventListener('click', addButtonOnClick);
 closeButtonProfile.addEventListener('click', closeButtonOnClick);
-closeButtonMesto.addEventListener('click', closeButtonOnClick)
+closeButtonMesto.addEventListener('click', closeButtonOnClick);
+closeButtonPhoto.addEventListener('click', closeButtonOnClick);
 popupProfileButton.addEventListener('submit', popupSubmit);
 popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
