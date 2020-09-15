@@ -1,4 +1,3 @@
-
 // Определение переменных
 const popupProfile = document.querySelector('.popup_form_profile');
 const popupMesto = document.querySelector('.popup_form_mesto');
@@ -19,6 +18,7 @@ const addCardButton = document.querySelector('.profile__button-add');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 const cardsElements = document.querySelector('.elements');
+const cardTemplate = document.querySelector('#element-template').content;
 
 // Первоначальные значения карточек
 const initialCards = [
@@ -107,7 +107,6 @@ const popupMestoSubmit = function (evt) {
 
 // Добавление карточки на форму
 const addCards = function (cardLink, name) {
-    const cardTemplate = document.querySelector('#element-template').content;
     const cardElement = cardTemplate.cloneNode(true);
 
     const cardPhoto = cardElement.querySelector('.element__photo');
@@ -116,7 +115,6 @@ const addCards = function (cardLink, name) {
 
     // Открытие popup c картинкой для просмотра
     cardPhoto.addEventListener('click', evt =>{
-        
         popupImage.src = evt.target.src;
         popupImage.alt = evt.target.alt;
         popupPhotoCaption.textContent = evt.target.alt;  
