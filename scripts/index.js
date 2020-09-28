@@ -45,15 +45,27 @@ const initialCards = [
     }
 ];
 
-// Изменение видимости popup'a
-const renderPopup = function (form) {
-    form.classList.toggle('popup_opened');
+// Открытие формы popup'a
+const openPopup = function (form) {
+    document.addEventListener('keydown', popupCloseByKeyDownESC);
+    form.classList.add('popup_opened');
+};
+
+// Закрытие формы popup'a
+const closePopup = function (form) {
+    document.removeEventListener('keydown', popupCloseByKeyDownESC);
+    form.classList.remove('popup_opened');
+
+    //Убираем классы с ошибками у input полей
+    //Убираем видимость ошибки
+    //Очищаем текст ошибки
+    removeErrors(form);
 };
 
 // Закрытие popup'a без сохранения при клике вне формы
 const popupCloseByClickOnOverlay = function (evt) {
     if (evt.target == evt.currentTarget) {
-        renderPopup(evt.target);
+        closePopup(evt.target);
     }
 };
 
@@ -62,22 +74,23 @@ const popupCloseByKeyDownESC = function (evt) {
     if (evt.key === 'Escape') {
         const opendPopup = document.querySelector('.popup_opened');
         if (opendPopup) {
-            renderPopup(opendPopup);
+            closePopup(opendPopup);
         };
     };
 };
 
 // Закрытие popup'a без сохранения при клике на крестик
 const closeButtonOnClick = function (evt) {
-    renderPopup(evt.target.parentElement.parentElement);
-}
+    closePopup(evt.target.parentElement.parentElement);
+};
 
 // Открытие формы редактирования профиля
 const editButtonOnClick = function () {
     nameInput.value = profileName.innerText;
     jobInput.value = profileJob.innerText;
 
-    renderPopup(popupProfile);
+    openPopup(popupProfile);
+    enableValidation(validationItems);
 };
 
 // Открытие формы добавления карточки
@@ -85,35 +98,45 @@ const addButtonOnClick = function () {
     cardNameInput.value = '';
     linkInput.value = '';
 
-    renderPopup(popupMesto);
+    openPopup(popupMesto);
+    enableValidation(validationItems);
 };
 
 // Сохранение формы редактирования профиля
 const popupSubmit = function (evt) {
     evt.preventDefault();
-
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
 
-    renderPopup(popupProfile);
+    closePopup(popupProfile);
 };
 
 // Сохранения формы добавления карточки
 const popupMestoSubmit = function (evt) {
     evt.preventDefault();
-
     const newCard = {
         name: cardNameInput.value,
         link: linkInput.value
     };
 
     initialCards.push(newCard);
-    addCards(newCard.link, newCard.name);
-    renderPopup(popupMesto);
+    addNewCard(newCard.link, newCard.name);
+    closePopup(popupMesto);
+};
+
+// Добавить новую карту
+const addNewCard = function (cardLink, name) {
+    const newCard = addCard(cardLink, name);
+    renderCard(newCard);
+};
+
+// Отрисовать карту на форме
+const renderCard = function (newCard) {
+    cardsElements.prepend(newCard);
 };
 
 // Добавление карточки на форму
-const addCards = function (cardLink, name) {
+const addCard = function (cardLink, name) {
     const cardElement = cardTemplate.cloneNode(true);
 
     const cardPhoto = cardElement.querySelector('.element__photo');
@@ -126,7 +149,7 @@ const addCards = function (cardLink, name) {
         popupImage.alt = evt.target.alt;
         popupPhotoCaption.textContent = evt.target.alt;
 
-        renderPopup(popupPhoto);
+        openPopup(popupPhoto);
     });
 
     cardElement.querySelector('.element__info-name').textContent = name;
@@ -143,7 +166,7 @@ const addCards = function (cardLink, name) {
         evt.target.parentElement.remove();
     });
 
-    cardsElements.prepend(cardElement);
+    return cardElement;
 };
 
 // установка закрытия попапов
@@ -156,11 +179,8 @@ function setClosePopup() {
         closeButtonList.forEach(closeButton => {
             closeButton.addEventListener('click', closeButtonOnClick);
         });
-
     });
-
-    document.addEventListener('keydown', popupCloseByKeyDownESC);
-}
+};
 
 // Обработчики событий форм
 editButton.addEventListener('click', editButtonOnClick);
@@ -169,5 +189,5 @@ popupProfileButton.addEventListener('submit', popupSubmit);
 popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
 // Первоначальное заполнение карточек
-initialCards.forEach(card => addCards(card.link, card.name));
+initialCards.forEach(card => addNewCard(card.link, card.name));
 setClosePopup();
