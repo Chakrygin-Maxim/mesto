@@ -7,20 +7,27 @@ const validationItems = {
   errorClass: 'popup__error_visible'
 };
 
+function checkOpenedPopup(formElement, inputSelector, submitButtonSelector, inactiveButtonClass){
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const buttonElement = formElement.querySelector(submitButtonSelector);
+
+  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+} 
+
 // Убираем ошибки со всех полей ввода на форме
-function removeErrors(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(validationItems.inputSelector));
+function removeErrors(formElement, inputSelector, inputErrorClass, errorClass) {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   inputList.forEach(inputElement => {
-    hideInputError(formElement, inputElement, validationItems.inputErrorClass, validationItems.errorClass);
+    hideInputError(formElement, inputElement, inputErrorClass, errorClass);
   });
-};
+}
 
 // Проверяем что хотябы одно воле не валидно
 function hasInvalidInput(inputList) {
   return inputList.some(inputElement => {
     return !inputElement.validity.valid
   });
-};
+}
 
 // Переключаем доступность кнопки submit
 function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
@@ -28,8 +35,8 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
     buttonElement.classList.add(inactiveButtonClass);
   } else {
     buttonElement.classList.remove(inactiveButtonClass);
-  };
-};
+  }
+}
 
 // Отображаем поля с ошибками
 const showInputError = function (formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
@@ -53,7 +60,7 @@ const checkInputValidity = function (formElement, inputElement, inputErrorClass,
     showInputError(formElement, inputElement, inputElement.validationMessage, inputErrorClass, errorClass);
   } else {
     hideInputError(formElement, inputElement, inputErrorClass, errorClass);
-  };
+  }
 };
 
 // Установка слушателей у полей ввода
@@ -73,12 +80,12 @@ const setEventListeners = function (formElement, validationElements) {
 
 // Включаем валидацию формы
 function enableValidation(validationElements) {
-
   const formList = Array.from(document.querySelectorAll(validationElements.formSelector));
+ 
   formList.forEach(formElement => {
     setEventListeners(formElement, validationElements);
   })
-};
+}
 
 // Первоначальная установка валидации форм
 enableValidation(validationItems);

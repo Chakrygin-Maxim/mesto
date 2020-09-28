@@ -55,33 +55,35 @@ const openPopup = function (form) {
 const closePopup = function (form) {
     document.removeEventListener('keydown', popupCloseByKeyDownESC);
     form.classList.remove('popup_opened');
+};
 
-    //Убираем классы с ошибками у input полей
-    //Убираем видимость ошибки
-    //Очищаем текст ошибки
-    removeErrors(form);
+const closePopupWithoutSave = function (form) {
+    const { inputSelector, inputErrorClass, errorClass } = validationItems;
+
+    removeErrors(form, inputSelector, inputErrorClass, errorClass);
+    closePopup(form);
 };
 
 // Закрытие popup'a без сохранения при клике вне формы
 const popupCloseByClickOnOverlay = function (evt) {
-    if (evt.target == evt.currentTarget) {
-        closePopup(evt.target);
+    if (evt.target === evt.currentTarget) {
+        closePopupWithoutSave(evt.target);
     }
 };
 
 // Закрытие popup'a без сохранения при нажатии на кнопку 'ESC'
 const popupCloseByKeyDownESC = function (evt) {
     if (evt.key === 'Escape') {
-        const opendPopup = document.querySelector('.popup_opened');
-        if (opendPopup) {
-            closePopup(opendPopup);
-        };
-    };
+        const openedPopup = document.querySelector('.popup_opened');
+        if (openedPopup) {
+            closePopupWithoutSave(openedPopup);
+        }
+    }
 };
 
 // Закрытие popup'a без сохранения при клике на крестик
 const closeButtonOnClick = function (evt) {
-    closePopup(evt.target.parentElement.parentElement);
+    closePopupWithoutSave(evt.target.parentElement.parentElement);
 };
 
 // Открытие формы редактирования профиля
@@ -89,17 +91,19 @@ const editButtonOnClick = function () {
     nameInput.value = profileName.innerText;
     jobInput.value = profileJob.innerText;
 
+    const {inputSelector, submitButtonSelector,inactiveButtonClass} = validationItems;
+    checkOpenedPopup(popupProfile, inputSelector, submitButtonSelector, inactiveButtonClass);
     openPopup(popupProfile);
-    enableValidation(validationItems);
 };
 
 // Открытие формы добавления карточки
 const addButtonOnClick = function () {
     cardNameInput.value = '';
     linkInput.value = '';
-
+    
+    const {inputSelector, submitButtonSelector,inactiveButtonClass} = validationItems;
+    checkOpenedPopup(popupMesto, inputSelector, submitButtonSelector, inactiveButtonClass);
     openPopup(popupMesto);
-    enableValidation(validationItems);
 };
 
 // Сохранение формы редактирования профиля
@@ -119,12 +123,11 @@ const popupMestoSubmit = function (evt) {
         link: linkInput.value
     };
 
-    initialCards.push(newCard);
     addNewCard(newCard.link, newCard.name);
     closePopup(popupMesto);
 };
 
-// Добавить новую карту
+// Добавить новую карточку
 const addNewCard = function (cardLink, name) {
     const newCard = addCard(cardLink, name);
     renderCard(newCard);
@@ -180,7 +183,7 @@ function setClosePopup() {
             closeButton.addEventListener('click', closeButtonOnClick);
         });
     });
-};
+}
 
 // Обработчики событий форм
 editButton.addEventListener('click', editButtonOnClick);
@@ -189,5 +192,8 @@ popupProfileButton.addEventListener('submit', popupSubmit);
 popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
 // Первоначальное заполнение карточек
-initialCards.forEach(card => addNewCard(card.link, card.name));
+initialCards.forEach(card => {
+    const newCard = addCard(card.link, card.name);
+    cardsElements.append(newCard);
+});
 setClosePopup();
