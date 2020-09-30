@@ -57,17 +57,10 @@ const closePopup = function (form) {
     form.classList.remove('popup_opened');
 };
 
-const closePopupWithoutSave = function (form) {
-    const { inputSelector, inputErrorClass, errorClass } = validationItems;
-
-    removeErrors(form, inputSelector, inputErrorClass, errorClass);
-    closePopup(form);
-};
-
 // Закрытие popup'a без сохранения при клике вне формы
 const popupCloseByClickOnOverlay = function (evt) {
     if (evt.target === evt.currentTarget) {
-        closePopupWithoutSave(evt.target);
+        closePopup(evt.target);
     }
 };
 
@@ -76,23 +69,28 @@ const popupCloseByKeyDownESC = function (evt) {
     if (evt.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_opened');
         if (openedPopup) {
-            closePopupWithoutSave(openedPopup);
+            closePopup(openedPopup);
         }
     }
 };
 
 // Закрытие popup'a без сохранения при клике на крестик
 const closeButtonOnClick = function (evt) {
-    closePopupWithoutSave(evt.target.parentElement.parentElement);
+    closePopup(evt.target.parentElement.parentElement);
 };
+
+// Проверяем ошибки при открытии попапа
+const checkPopup = function(formElement){
+    const {inputSelector, submitButtonSelector,inactiveButtonClass, inputErrorClass, errorClass} = validationItems;
+    validatePopup(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass);
+}
 
 // Открытие формы редактирования профиля
 const editButtonOnClick = function () {
     nameInput.value = profileName.innerText;
     jobInput.value = profileJob.innerText;
 
-    const {inputSelector, submitButtonSelector,inactiveButtonClass} = validationItems;
-    checkOpenedPopup(popupProfile, inputSelector, submitButtonSelector, inactiveButtonClass);
+    checkPopup(popupProfile);
     openPopup(popupProfile);
 };
 
@@ -101,8 +99,7 @@ const addButtonOnClick = function () {
     cardNameInput.value = '';
     linkInput.value = '';
     
-    const {inputSelector, submitButtonSelector,inactiveButtonClass} = validationItems;
-    checkOpenedPopup(popupMesto, inputSelector, submitButtonSelector, inactiveButtonClass);
+    checkPopup(popupMesto);
     openPopup(popupMesto);
 };
 
@@ -176,7 +173,7 @@ const addCard = function (cardLink, name) {
 function setClosePopup() {
     const popupList = Array.from(document.querySelectorAll('.popup'));
     popupList.forEach(popup => {
-        popup.addEventListener('click', popupCloseByClickOnOverlay);
+        popup.addEventListener('mousedown', popupCloseByClickOnOverlay);
 
         const closeButtonList = Array.from(popup.querySelectorAll('.popup__button-close'));
         closeButtonList.forEach(closeButton => {

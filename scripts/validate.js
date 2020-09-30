@@ -7,20 +7,16 @@ const validationItems = {
   errorClass: 'popup__error_visible'
 };
 
-function checkOpenedPopup(formElement, inputSelector, submitButtonSelector, inactiveButtonClass){
+function validatePopup(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass){
   const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   const buttonElement = formElement.querySelector(submitButtonSelector);
 
   toggleButtonState(inputList, buttonElement, inactiveButtonClass);
-} 
 
-// Убираем ошибки со всех полей ввода на форме
-function removeErrors(formElement, inputSelector, inputErrorClass, errorClass) {
-  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   inputList.forEach(inputElement => {
     hideInputError(formElement, inputElement, inputErrorClass, errorClass);
   });
-}
+} 
 
 // Проверяем что хотябы одно воле не валидно
 function hasInvalidInput(inputList) {
