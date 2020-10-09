@@ -1,14 +1,15 @@
 class Card {
 
-    constructor(item, openPopupPhotoHandler) {
+    constructor(item, templateSelector, openPopupPhotoHandler) {
         this._name = item.name;
         this._link = item.link;
+        this._templateSelector = templateSelector;
         this._openPopupPhotoHandler = openPopupPhotoHandler;
     }
-
+ 
     _getTemplate() {
         return document
-            .querySelector('#element-template')
+            .querySelector(this._templateSelector)
             .content
             .cloneNode(true);
     }

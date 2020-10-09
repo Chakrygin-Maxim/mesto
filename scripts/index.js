@@ -1,5 +1,6 @@
+import {initialCards, validationItems, cardTemplate} from './config.js';
 import Card from './card.js';
-import {initialCards} from './config.js';
+import FormValidator from './formValidator.js';
 
 // Определение переменных
 const popupProfile = document.querySelector('.popup_form_profile');
@@ -63,8 +64,8 @@ const closeButtonOnClick = (evt) => {
 
 // Проверяем ошибки при открытии попапа
 const checkPopup = (formElement) => {
-    const {inputSelector, submitButtonSelector,inactiveButtonClass, inputErrorClass, errorClass} = validationItems;
-    validatePopup(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass);
+    const formValidator = new FormValidator(validationItems, formElement);
+    formValidator.enableValidation();
 }
 
 // Открытие формы редактирования профиля
@@ -108,7 +109,7 @@ const popupMestoSubmit = (evt) => {
 
 // Добавить новую карточку
 const addNewCard = (cardItem) => {
-    const newCard = new Card(cardItem, openPopupPhotoHandler);
+    const newCard = new Card(cardItem, cardTemplate, openPopupPhotoHandler);
     const cardElement = newCard.generateCard();
     
     renderCard(cardElement);
@@ -140,7 +141,7 @@ popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
 // Первоначальное заполнение карточек
 initialCards.forEach(cardItem => {
-    const newCard = new Card(cardItem, openPopupPhotoHandler);
+    const newCard = new Card(cardItem, '#element-template', openPopupPhotoHandler);
     const cardElement = newCard.generateCard();
     cardsElements.append(cardElement);
 });
