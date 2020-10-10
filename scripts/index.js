@@ -141,7 +141,7 @@ popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
 // Первоначальное заполнение карточек
 initialCards.forEach(cardItem => {
-    const newCard = new Card(cardItem, '#element-template', openPopupPhotoHandler);
+    const newCard = new Card(cardItem, cardTemplate, openPopupPhotoHandler);
     const cardElement = newCard.generateCard();
     cardsElements.append(cardElement);
 });
