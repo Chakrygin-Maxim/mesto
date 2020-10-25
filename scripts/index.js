@@ -2,12 +2,16 @@ import {
     initialCards,
     validationItems,
     cardTemplate,
-    cardListSelector
+    cardListSelector,
+    formProfileSelector,
+    formMestoSelector,
+    formphotoSelector
 } from './config.js';
 
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
+import Popup from './Popup.js';
 
 // Определение переменных
 const popupProfile = document.querySelector('.popup_form_profile');
@@ -55,13 +59,6 @@ const closePopup = (form) => {
     form.classList.remove('popup_opened');
 };
 
-// Закрытие popup'a без сохранения при клике вне формы
-const popupCloseByClickOnOverlay = (evt) => {
-    if (evt.target === evt.currentTarget) {
-        closePopup(evt.target);
-    }
-};
-
 // Закрытие popup'a без сохранения при нажатии на кнопку 'ESC'
 const popupCloseByKeyDownESC = (evt) => {
     if (evt.key === 'Escape') {
@@ -70,11 +67,6 @@ const popupCloseByKeyDownESC = (evt) => {
             closePopup(openedPopup);
         }
     }
-};
-
-// Закрытие popup'a без сохранения при клике на крестик
-const closeButtonOnClick = (evt) => {
-    closePopup(evt.target.parentElement.parentElement);
 };
 
 // Проверяем ошибки при открытии попапа
@@ -89,7 +81,10 @@ const editButtonOnClick = () => {
     jobInput.value = profileJob.innerText;
 
     checkPopup(popupProfile);
-    openPopup(popupProfile);
+    
+    const popup = new Popup(formProfileSelector);
+    popup.setEventListeners();
+    popup.open();
 };
 
 // Открытие формы добавления карточки
@@ -98,7 +93,12 @@ const addButtonOnClick = () => {
     linkInput.value = '';
 
     checkPopup(popupMesto);
-    openPopup(popupMesto);
+
+    const popup = new Popup(formMestoSelector);
+    popup.setEventListeners();
+    popup.open();
+
+    // openPopup(popupMesto);
 };
 
 // Сохранение формы редактирования профиля
@@ -128,19 +128,6 @@ const popupMestoSubmit = (evt) => {
     closePopup(popupMesto);
 };
 
-// установка закрытия попапов
-function setClosePopup() {
-    const popupList = Array.from(document.querySelectorAll('.popup'));
-    popupList.forEach(popup => {
-        popup.addEventListener('mousedown', popupCloseByClickOnOverlay);
-
-        const closeButtonList = Array.from(popup.querySelectorAll('.popup__button-close'));
-        closeButtonList.forEach(closeButton => {
-            closeButton.addEventListener('click', closeButtonOnClick);
-        });
-    });
-}
-
 // Обработчики событий форм
 editButton.addEventListener('click', editButtonOnClick);
 addCardButton.addEventListener('click', addButtonOnClick);
@@ -149,4 +136,3 @@ popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
 CardList.renderItems();
 
-setClosePopup();
