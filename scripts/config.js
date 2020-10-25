@@ -35,3 +35,4 @@ export const validationItems = {
   };
 
   export const cardTemplate = '#element-template';
+  export const cardListSelector = '.elements';

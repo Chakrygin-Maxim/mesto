@@ -1,6 +1,13 @@
-import {initialCards, validationItems, cardTemplate} from './config.js';
+import {
+    initialCards,
+    validationItems,
+    cardTemplate,
+    cardListSelector
+} from './config.js';
+
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
 
 // Определение переменных
 const popupProfile = document.querySelector('.popup_form_profile');
@@ -18,7 +25,15 @@ const editButton = document.querySelector('.profile__button-edit');
 const addCardButton = document.querySelector('.profile__button-add');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-const cardsElements = document.querySelector('.elements');
+
+const CardList = new Section({
+    items: initialCards,
+    renderer: (cardItem) => {
+        const newCard = new Card(cardItem, cardTemplate, openPopupPhotoHandler);
+        const cardElement = newCard.generateCard();
+        CardList.addItem(cardElement);
+    }
+}, cardListSelector);
 
 // Открытие формы popup'a
 const openPopup = (form) => {
@@ -26,7 +41,7 @@ const openPopup = (form) => {
     form.classList.add('popup_opened');
 };
 
-const openPopupPhotoHandler = (elementPhoto)=> {
+const openPopupPhotoHandler = (elementPhoto) => {
     popupImage.src = elementPhoto.src;
     popupImage.alt = elementPhoto.alt;
     popupPhotoCaption.textContent = elementPhoto.alt;
@@ -81,7 +96,7 @@ const editButtonOnClick = () => {
 const addButtonOnClick = () => {
     cardNameInput.value = '';
     linkInput.value = '';
-    
+
     checkPopup(popupMesto);
     openPopup(popupMesto);
 };
@@ -97,27 +112,20 @@ const popupProfileSubmit = (evt) => {
 
 // Сохранения формы добавления карточки
 const popupMestoSubmit = (evt) => {
+
     evt.preventDefault();
-    const newCard = {
+
+    const newCard = new Card({
         name: cardNameInput.value,
         link: linkInput.value
-    };
+        },
+        cardTemplate,
+        openPopupPhotoHandler);
 
-    addNewCard(newCard);
-    closePopup(popupMesto);
-};
-
-// Добавить новую карточку
-const addNewCard = (cardItem) => {
-    const newCard = new Card(cardItem, cardTemplate, openPopupPhotoHandler);
     const cardElement = newCard.generateCard();
-    
-    renderCard(cardElement);
-};
+    CardList.addItem(cardElement);
 
-// Отрисовать карту на форме
-const renderCard = (newCard) => {
-    cardsElements.prepend(newCard);
+    closePopup(popupMesto);
 };
 
 // установка закрытия попапов
@@ -139,11 +147,6 @@ addCardButton.addEventListener('click', addButtonOnClick);
 popupProfileButton.addEventListener('submit', popupProfileSubmit);
 popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
-// Первоначальное заполнение карточек
-initialCards.forEach(cardItem => {
-    const newCard = new Card(cardItem, cardTemplate, openPopupPhotoHandler);
-    const cardElement = newCard.generateCard();
-    cardsElements.append(cardElement);
-});
+CardList.renderItems();
 
 setClosePopup();
