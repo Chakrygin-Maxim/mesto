@@ -1,6 +1,6 @@
 import {initialCards, validationItems, cardTemplate} from './config.js';
-import Card from './card.js';
-import FormValidator from './formValidator.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 // Определение переменных
 const popupProfile = document.querySelector('.popup_form_profile');
