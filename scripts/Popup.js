@@ -22,6 +22,11 @@ class Popup {
         }
     }
 
+    _addEventListeners(){
+        this._popup.addEventListener('click', this._handleButtonClose);
+        document.addEventListener('keydown', this._handleEscClose);
+    }
+
     _removeEventListeners() {
         this._popup.removeEventListener('click', this._handleButtonClose);
         document.removeEventListener('keydown', this._handleEscClose);
@@ -37,8 +42,7 @@ class Popup {
     }
 
     setEventListeners() {
-        this._popup.addEventListener('click', this._handleButtonClose);
-        document.addEventListener('keydown', this._handleEscClose);
+        this._addEventListeners();
     }
 }
 export default Popup;

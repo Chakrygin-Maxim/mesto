@@ -13,11 +13,11 @@ import FormValidator from './FormValidator.js';
 import Section from './Section.js';
 import Popup from './Popup.js';
 import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
 
 // Определение переменных
 const popupProfile = document.querySelector('.popup_form_profile');
 const popupMesto = document.querySelector('.popup_form_mesto');
-const popupProfileButton = popupProfile.querySelector('.popup__form');
 const popupMestoButton = popupMesto.querySelector('.popup__form');
 const nameInput = popupProfile.querySelector('.popup__input_field_name');
 const jobInput = popupProfile.querySelector('.popup__input_field_job');
@@ -28,6 +28,12 @@ const addCardButton = document.querySelector('.profile__button-add');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
+const openPopupPhotoHandler = (elementPhoto) => {
+    const popupWithImage = new PopupWithImage(elementPhoto, formPhotoSelector);
+    popupWithImage.setEventListeners();
+    popupWithImage.open();
+}
+
 const CardList = new Section({
     items: initialCards,
     renderer: (cardItem) => {
@@ -36,12 +42,6 @@ const CardList = new Section({
         CardList.addItem(cardElement);
     }
 }, cardListSelector);
-
-const openPopupPhotoHandler = (elementPhoto) => {
-    const popupWithImage = new PopupWithImage(elementPhoto, formPhotoSelector);
-    popupWithImage.setEventListeners();
-    popupWithImage.open();
-}
 
 const closePopup = (form) => {
     document.removeEventListener('keydown', popupCloseByKeyDownESC);
@@ -64,6 +64,12 @@ const checkPopup = (formElement) => {
     formValidator.enableValidation();
 }
 
+// Колбэк отображения данных профиля на форме
+const popupProfileSubmit = (inputValues) => {
+    profileName.textContent = inputValues.name;
+    profileJob.textContent = inputValues.job;
+};
+
 // Открытие формы редактирования профиля
 const editButtonOnClick = () => {
     nameInput.value = profileName.innerText;
@@ -71,7 +77,7 @@ const editButtonOnClick = () => {
 
     checkPopup(popupProfile);
     
-    const popup = new Popup(formProfileSelector);
+    const popup = new PopupWithForm(popupProfileSubmit, formProfileSelector);
     popup.setEventListeners();
     popup.open();
 };
@@ -86,15 +92,6 @@ const addButtonOnClick = () => {
     const popup = new Popup(formMestoSelector);
     popup.setEventListeners();
     popup.open();
-};
-
-// Сохранение формы редактирования профиля
-const popupProfileSubmit = (evt) => {
-    evt.preventDefault();
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-
-    closePopup(popupProfile);
 };
 
 // Сохранения формы добавления карточки
@@ -118,7 +115,7 @@ const popupMestoSubmit = (evt) => {
 // Обработчики событий форм
 editButton.addEventListener('click', editButtonOnClick);
 addCardButton.addEventListener('click', addButtonOnClick);
-popupProfileButton.addEventListener('submit', popupProfileSubmit);
+
 popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
 CardList.renderItems();
