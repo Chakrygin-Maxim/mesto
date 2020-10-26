@@ -5,22 +5,20 @@ import {
     cardListSelector,
     formProfileSelector,
     formMestoSelector,
-    formphotoSelector
+    formPhotoSelector
 } from './config.js';
 
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
 import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
 
 // Определение переменных
 const popupProfile = document.querySelector('.popup_form_profile');
 const popupMesto = document.querySelector('.popup_form_mesto');
-const popupPhoto = document.querySelector('.popup_form_photo');
 const popupProfileButton = popupProfile.querySelector('.popup__form');
 const popupMestoButton = popupMesto.querySelector('.popup__form');
-const popupImage = popupPhoto.querySelector('.popup__image');
-const popupPhotoCaption = popupPhoto.querySelector('.popup__caption');
 const nameInput = popupProfile.querySelector('.popup__input_field_name');
 const jobInput = popupProfile.querySelector('.popup__input_field_job');
 const cardNameInput = popupMesto.querySelector('.popup__input_field_cardName');
@@ -39,21 +37,12 @@ const CardList = new Section({
     }
 }, cardListSelector);
 
-// Открытие формы popup'a
-const openPopup = (form) => {
-    document.addEventListener('keydown', popupCloseByKeyDownESC);
-    form.classList.add('popup_opened');
-};
-
 const openPopupPhotoHandler = (elementPhoto) => {
-    popupImage.src = elementPhoto.src;
-    popupImage.alt = elementPhoto.alt;
-    popupPhotoCaption.textContent = elementPhoto.alt;
-
-    openPopup(popupPhoto);
+    const popupWithImage = new PopupWithImage(elementPhoto, formPhotoSelector);
+    popupWithImage.setEventListeners();
+    popupWithImage.open();
 }
 
-// Закрытие формы popup'a
 const closePopup = (form) => {
     document.removeEventListener('keydown', popupCloseByKeyDownESC);
     form.classList.remove('popup_opened');
@@ -97,8 +86,6 @@ const addButtonOnClick = () => {
     const popup = new Popup(formMestoSelector);
     popup.setEventListeners();
     popup.open();
-
-    // openPopup(popupMesto);
 };
 
 // Сохранение формы редактирования профиля
@@ -135,4 +122,3 @@ popupProfileButton.addEventListener('submit', popupProfileSubmit);
 popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
 CardList.renderItems();
-

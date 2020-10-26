@@ -38,4 +38,4 @@ export const validationItems = {
   export const cardListSelector = '.elements';
   export const formProfileSelector = '.popup_form_profile';
   export const formMestoSelector = '.popup_form_mesto';
-  export const formphotoSelector = '.popup_form_photo';
+  export const formPhotoSelector = '.popup_form_photo';
