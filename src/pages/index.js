@@ -22,8 +22,6 @@ const popupProfile = document.querySelector('.popup_form_profile');
 const popupMesto = document.querySelector('.popup_form_mesto');
 const nameInput = popupProfile.querySelector('.popup__input_field_name');
 const jobInput = popupProfile.querySelector('.popup__input_field_job');
-const cardNameInput = popupMesto.querySelector('.popup__input_field_cardName');
-const linkInput = popupMesto.querySelector('.popup__input_field_link');
 const editButton = document.querySelector('.profile__button-edit');
 const addCardButton = document.querySelector('.profile__button-add');
 
@@ -83,9 +81,6 @@ const editButtonOnClick = () => {
 
 // Инициализирует форму добавления карточки
 const addButtonOnClick = () => {
-    cardNameInput.value = '';
-    linkInput.value = '';
-
     checkPopup(popupMesto);
     openPopup(handlePopupMestoSubmit, formMestoSelector);
 };
