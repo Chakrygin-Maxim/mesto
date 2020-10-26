@@ -28,7 +28,7 @@ const addCardButton = document.querySelector('.profile__button-add');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
-const openPopupPhotoHandler = (elementPhoto) => {
+const handleCardClick = (elementPhoto) => {
     const popupWithImage = new PopupWithImage(elementPhoto, formPhotoSelector);
     popupWithImage.setEventListeners();
     popupWithImage.open();
@@ -37,7 +37,7 @@ const openPopupPhotoHandler = (elementPhoto) => {
 const CardList = new Section({
     items: initialCards,
     renderer: (cardItem) => {
-        const newCard = new Card(cardItem, cardTemplate, openPopupPhotoHandler);
+        const newCard = new Card(cardItem, cardTemplate, handleCardClick);
         const cardElement = newCard.generateCard();
         CardList.addItem(cardElement);
     }
@@ -65,9 +65,23 @@ const checkPopup = (formElement) => {
 }
 
 // Колбэк отображения данных профиля на форме
-const popupProfileSubmit = (inputValues) => {
+const handlePopupProfileSubmit = (inputValues) => {
     profileName.textContent = inputValues.name;
     profileJob.textContent = inputValues.job;
+};
+
+// Сохранения формы добавления карточки
+const handlePopupMestoSubmit = (inputValues) => {
+
+    const newCard = new Card({
+        name: inputValues.cardName,
+        link: inputValues.link
+    },
+        cardTemplate,
+        handleCardClick);
+
+    const cardElement = newCard.generateCard();
+    CardList.addItem(cardElement);
 };
 
 // Открытие формы редактирования профиля
@@ -76,10 +90,7 @@ const editButtonOnClick = () => {
     jobInput.value = profileJob.innerText;
 
     checkPopup(popupProfile);
-    
-    const popup = new PopupWithForm(popupProfileSubmit, formProfileSelector);
-    popup.setEventListeners();
-    popup.open();
+    openPopup(handlePopupProfileSubmit, formProfileSelector);
 };
 
 // Открытие формы добавления карточки
@@ -88,34 +99,17 @@ const addButtonOnClick = () => {
     linkInput.value = '';
 
     checkPopup(popupMesto);
-
-    const popup = new Popup(formMestoSelector);
-    popup.setEventListeners();
-    popup.open();
+    openPopup(handlePopupMestoSubmit, formMestoSelector);
 };
 
-// Сохранения формы добавления карточки
-const popupMestoSubmit = (evt) => {
-
-    evt.preventDefault();
-
-    const newCard = new Card({
-        name: cardNameInput.value,
-        link: linkInput.value
-        },
-        cardTemplate,
-        openPopupPhotoHandler);
-
-    const cardElement = newCard.generateCard();
-    CardList.addItem(cardElement);
-
-    closePopup(popupMesto);
-};
+const openPopup = (submitHandler, formSelector) => {
+    const popupWithForm = new PopupWithForm(submitHandler, formSelector);
+    popupWithForm.setEventListeners();
+    popupWithForm.open();
+}
 
 // Обработчики событий форм
 editButton.addEventListener('click', editButtonOnClick);
 addCardButton.addEventListener('click', addButtonOnClick);
-
-popupMestoButton.addEventListener('submit', popupMestoSubmit);
 
 CardList.renderItems();
