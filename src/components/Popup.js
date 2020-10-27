@@ -4,19 +4,13 @@ class Popup {
         this._popup = document.querySelector(popupSelector);
     }
 
-    _handleEscClose = evt => {
+    _handleEscClose(evt){
         if (evt.key === 'Escape') {
             this.close();
         }
     }
 
-    _handleOverlayClose = evt => {
-        if (evt.target === evt.currentTarget) {
-            this.close();
-        }
-    }
-
-    _handleButtonClose = (evt) => {
+    _handleButtonClose(evt) {
         if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__button-close')) {
             this.close();
         }
