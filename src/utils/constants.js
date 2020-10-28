@@ -35,3 +35,9 @@ export const validationItems = {
   };
 
   export const cardTemplate = '#element-template';
+  export const cardListSelector = '.elements';
+  export const formProfileSelector = '.popup_form_profile';
+  export const formMestoSelector = '.popup_form_mesto';
+  export const formPhotoSelector = '.popup_form_photo';
+  export const nameSelector = '.profile__name';
+  export const jobSelector = '.profile__job';
