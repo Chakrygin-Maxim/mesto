@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: { main: './src/pages/index.js' },
@@ -12,7 +13,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.m?js$/,
+                test: /\.m?js$/, // Загрузчик JS
                 exclude: /(node_modules)/,
                 use: {
                     loader: 'babel-loader',
@@ -22,7 +23,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(png|jpe?g|gif|svg)$/i,
+                test: /\.(png|jpe?g|gif|svg|woff|woff2)$/i, // Загрузчик картинок
                 use: [
                     {
                         loader: 'file-loader',
@@ -30,13 +31,22 @@ module.exports = {
                 ],
             },
             {
-                test: /\.html$/i,
+                test: /\.html$/i, // Загрузчик для html
                 loader: 'html-loader',
             },
+            {
+                test: /\.(woff|woff2|ttf|eot)$/, // Загрузчик для шрифтов
+                use: 'file-loader'
+            },
+            {
+                test: /\.css$/i, // Загрузчик css
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({
-        template: './src/index.html',
-    })],
+    plugins: [
+        new HtmlWebpackPlugin({ template: './src/index.html' }),
+        new MiniCssExtractPlugin(),
+    ],
     devtool: 'inline-source-map',
 }; 
