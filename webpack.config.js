@@ -23,12 +23,20 @@ module.exports = {
                 }
             },
             {
-                test: /\.(png|jpe?g|gif|svg|woff|woff2)$/i, // Загрузчик картинок
+                test: /.(png|svg|jpe?g|gif)$/, // Загрузчик картинок
                 use: [
                     {
-                        loader: 'file-loader',
-                    },
-                ],
+                        loader: 'file-loader?name=./images/[name].[ext]'
+                    }
+                ]
+            },
+            {
+                test: /.(eot|ttf|woff|woff2)$/, // Загрузчик шрифтов
+                use: [
+                    {
+                        loader: 'file-loader?name=./vendor/[name].[ext]',
+                    }
+                ]
             },
             {
                 test: /\.html$/i, // Загрузчик для html
