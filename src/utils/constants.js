@@ -43,3 +43,7 @@ export const nameSelector = '.profile__name';
 export const jobSelector = '.profile__job';
 export const editButton = document.querySelector('.profile__button-edit');
 export const addCardButton = document.querySelector('.profile__button-add');
+
+const popupProfile = document.querySelector(formProfileSelector);
+export const nameInput = popupProfile.querySelector('.popup__input_field_name');
+export const jobInput = popupProfile.querySelector('.popup__input_field_job');

@@ -11,7 +11,9 @@ import {
     nameSelector,
     jobSelector,
     editButton,
-    addCardButton
+    addCardButton,
+    nameInput,
+    jobInput
 } from '../utils/constants.js';
 
 import Card from '../components/Card.js';
@@ -20,11 +22,6 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
-
-// Определение переменных
-const popupProfile = document.querySelector(formProfileSelector);
-const nameInput = popupProfile.querySelector('.popup__input_field_name');
-const jobInput = popupProfile.querySelector('.popup__input_field_job');
 
 // Колбэк установки нового имени и должности профиля
 const handlePopupProfileSubmit = (inputValues) => {
