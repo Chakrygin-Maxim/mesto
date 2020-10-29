@@ -1,4 +1,4 @@
-import './index.css'; 
+import './index.css';
 
 import {
     initialCards,
@@ -9,7 +9,9 @@ import {
     formMestoSelector,
     formPhotoSelector,
     nameSelector,
-    jobSelector
+    jobSelector,
+    editButton,
+    addCardButton
 } from '../utils/constants.js';
 
 import Card from '../components/Card.js';
@@ -20,44 +22,21 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 
 // Определение переменных
-const popupProfile = document.querySelector('.popup_form_profile');
-const popupMesto = document.querySelector('.popup_form_mesto');
+const popupProfile = document.querySelector(formProfileSelector);
 const nameInput = popupProfile.querySelector('.popup__input_field_name');
 const jobInput = popupProfile.querySelector('.popup__input_field_job');
-const editButton = document.querySelector('.profile__button-edit');
-const addCardButton = document.querySelector('.profile__button-add');
 
-// Колбэк открытия карточки места по клику на нее
-const handleCardClick = (elementPhoto) => {
-    const popupWithImage = new PopupWithImage(elementPhoto, formPhotoSelector);
-    popupWithImage.setEventListeners();
-    popupWithImage.open();
-}
 // Колбэк установки нового имени и должности профиля
 const handlePopupProfileSubmit = (inputValues) => {
     userInfo.setUserInfo(inputValues.name, inputValues.job);
- };
+};
 
-// Карточка профиля
-const userInfo = new UserInfo({nameSelector, jobSelector});
-
-// Хранилище картинок
-const cardList = new Section({
-    items: initialCards,
-    renderer: (cardItem) => {
-        const newCard = new Card(cardItem, cardTemplate, handleCardClick);
-        const cardElement = newCard.generateCard();
-        cardList.addItem(cardElement);
-    }
-}, cardListSelector);
-
-// Проверяет ошибки при открытии попапа
-const checkPopup = (formElement) => {
-    const formValidator = new FormValidator(validationItems, formElement);
-    formValidator.enableValidation();
+// Колбэк открытия карточки места по клику на нее
+const handleCardClick = (elementPhoto) => {
+    popupWithImage.open(elementPhoto);
 }
 
-// Добавляет новую карточку на форму
+// Колбэк добавляет новую карточку на форму
 const handlePopupMestoSubmit = (inputValues) => {
     const newCard = new Card({
         name: inputValues.cardName,
@@ -70,33 +49,53 @@ const handlePopupMestoSubmit = (inputValues) => {
     cardList.addItem(cardElement);
 };
 
-// Инициализирует форму редактирования профиля пользователя
-const editButtonOnClick = () => {
+// Карточка профиля
+const userInfo = new UserInfo({ nameSelector, jobSelector });
+
+// Попап с картинкой
+const popupWithImage = new PopupWithImage(formPhotoSelector);
+popupWithImage.setEventListeners();
+
+// Попап изменение профиля
+const popupEditProfile = new PopupWithForm(handlePopupProfileSubmit, formProfileSelector);
+popupEditProfile.setEventListeners();
+
+// Попап добавление карточки
+const popupNewCard = new PopupWithForm(handlePopupMestoSubmit, formMestoSelector);
+popupNewCard.setEventListeners();
+
+// Хранилище картинок
+const cardList = new Section({
+    items: initialCards,
+    renderer: (cardItem) => {
+        const newCard = new Card(cardItem, cardTemplate, handleCardClick);
+        const cardElement = newCard.generateCard();
+        cardList.addItem(cardElement);
+    }
+}, cardListSelector);
+
+// Открывает форму изменения данных профиля
+editButton.addEventListener('click', () => {
     const profileData = userInfo.getUserInfo();
-    
+
     nameInput.value = profileData.name;
     jobInput.value = profileData.job;
 
-    checkPopup(popupProfile);
-    openPopup(handlePopupProfileSubmit, formProfileSelector);
-};
+    popupEditProfile.open();
+});
 
-// Инициализирует форму добавления карточки
-const addButtonOnClick = () => {
-    checkPopup(popupMesto);
-    openPopup(handlePopupMestoSubmit, formMestoSelector);
-};
-
-// Открывает popup с формой по переденным параметрам
-const openPopup = (submitHandler, formSelector) => {
-    const popupWithForm = new PopupWithForm(submitHandler, formSelector);
-    popupWithForm.setEventListeners();
-    popupWithForm.open();
-}
-
-// Обработчики событий форм
-editButton.addEventListener('click', editButtonOnClick);
-addCardButton.addEventListener('click', addButtonOnClick);
+// Открывает форму добавления новой карточки
+addCardButton.addEventListener('click', () => {
+    popupNewCard.open();
+});
 
 // Заполняет первоначальными карточками
 cardList.renderItems();
+
+// Включает валидацию формы профиля
+const profileValidation = new FormValidator(validationItems, document.forms.formProfile);
+profileValidation.enableValidation();
+
+// Включает валидацию формы ввода новой карточки
+const newCardValidation = new FormValidator(validationItems, document.forms.formNewCard);
+newCardValidation.enableValidation();
