@@ -24,9 +24,15 @@ import {
     token
 } from '../utils/constants.js';
 
+// Инициализация API
+const api = new Api(token, cohort);
+
 // Колбэк установки нового имени и должности профиля
 const handlePopupProfileSubmit = (inputValues) => {
-    userInfo.setUserInfo(inputValues.name, inputValues.job);
+    api.updateUserInfo(inputValues.name, inputValues.job)
+    .then(data => {
+        userInfo.setUserInfo(data.name, data.about)
+    })
 };
 
 // Колбэк открытия карточки места по клику на нее
@@ -46,9 +52,6 @@ const handlePopupMestoSubmit = (inputValues) => {
     const cardElement = newCard.generateCard();
     cardList.addItem(cardElement);
 };
-
-// Инициализация API
-const api = new Api(token, cohort);
 
 // Карточка профиля
 const userInfo = new UserInfo({ nameSelector, jobSelector, avatarSelector });
