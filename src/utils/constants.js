@@ -14,6 +14,7 @@ export const formMestoSelector = '.popup_form_mesto';
 export const formPhotoSelector = '.popup_form_photo';
 export const nameSelector = '.profile__name';
 export const jobSelector = '.profile__job';
+export const avatarSelector = '.profile__image';
 export const editButton = document.querySelector('.profile__button-edit');
 export const addCardButton = document.querySelector('.profile__button-add');
 export const token = '8a14ceb3-7392-4a44-a6bb-8080b9aa5657';

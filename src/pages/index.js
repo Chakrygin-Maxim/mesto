@@ -15,6 +15,7 @@ import {
     formPhotoSelector,
     nameSelector,
     jobSelector,
+    avatarSelector,
     editButton,
     addCardButton,
     nameInput,
@@ -46,8 +47,17 @@ const handlePopupMestoSubmit = (inputValues) => {
     cardList.addItem(cardElement);
 };
 
+// Инициализация API
+const api = new Api(token, cohort);
+
 // Карточка профиля
-const userInfo = new UserInfo({ nameSelector, jobSelector });
+const userInfo = new UserInfo({ nameSelector, jobSelector, avatarSelector });
+
+// Первоначальное заполнение профиля
+api.getUserInfo().then(data =>{
+    const {name, about, avatar} = data;
+    userInfo.setUserInfo(name, about, avatar);
+})
 
 // Попап с картинкой
 const popupWithImage = new PopupWithImage(formPhotoSelector);
@@ -61,6 +71,7 @@ popupEditProfile.setEventListeners();
 const popupNewCard = new PopupWithForm(handlePopupMestoSubmit, formMestoSelector);
 popupNewCard.setEventListeners();
 
+// Создаем секцию с карточками
 const cardList = new Section({
     renderer: (cardItem) => {
         const newCard = new Card(cardItem, cardTemplate, handleCardClick);
@@ -69,7 +80,7 @@ const cardList = new Section({
     }
 }, cardListSelector);
 
-const api = new Api(token, cohort);
+// Первоначальное заполнение карточек
 api.getInitialCards().then(data => {
     const items = data.map(card => {
         return {
