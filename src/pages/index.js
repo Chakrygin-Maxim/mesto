@@ -1,7 +1,12 @@
 import './index.css';
-
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import {
-    initialCards,
     validationItems,
     cardTemplate,
     cardListSelector,
@@ -13,15 +18,10 @@ import {
     editButton,
     addCardButton,
     nameInput,
-    jobInput
+    jobInput,
+    cohort,
+    token
 } from '../utils/constants.js';
-
-import Card from '../components/Card.js';
-import FormValidator from '../components/FormValidator.js';
-import Section from '../components/Section.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import UserInfo from '../components/UserInfo.js';
 
 // Колбэк установки нового имени и должности профиля
 const handlePopupProfileSubmit = (inputValues) => {
@@ -61,15 +61,24 @@ popupEditProfile.setEventListeners();
 const popupNewCard = new PopupWithForm(handlePopupMestoSubmit, formMestoSelector);
 popupNewCard.setEventListeners();
 
-// Хранилище картинок
 const cardList = new Section({
-    items: initialCards,
     renderer: (cardItem) => {
         const newCard = new Card(cardItem, cardTemplate, handleCardClick);
         const cardElement = newCard.generateCard();
         cardList.addItem(cardElement);
     }
 }, cardListSelector);
+
+const api = new Api(token, cohort);
+api.getInitialCards().then(data => {
+    const items = data.map(card => {
+        return {
+            name: card.name,
+            link: card.link
+        }
+    })
+    cardList.renderItems(items);
+})
 
 // Открывает форму изменения данных профиля
 editButton.addEventListener('click', () => {
@@ -85,9 +94,6 @@ editButton.addEventListener('click', () => {
 addCardButton.addEventListener('click', () => {
     popupNewCard.open();
 });
-
-// Заполняет первоначальными карточками
-cardList.renderItems();
 
 // Включает валидацию формы профиля
 const profileValidation = new FormValidator(validationItems, document.forms.formProfile);
