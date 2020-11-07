@@ -30,9 +30,9 @@ const api = new Api(token, cohort);
 // Колбэк установки нового имени и должности профиля
 const handlePopupProfileSubmit = (inputValues) => {
     api.updateUserInfo(inputValues.name, inputValues.job)
-    .then(data => {
-        userInfo.setUserInfo(data.name, data.about)
-    })
+        .then(data => {
+            userInfo.setUserInfo(data.name, data.about)
+        })
 };
 
 // Колбэк открытия карточки места по клику на нее
@@ -42,23 +42,25 @@ const handleCardClick = (elementPhoto) => {
 
 // Колбэк добавляет новую карточку на форму
 const handlePopupMestoSubmit = (inputValues) => {
-    const newCard = new Card({
-        name: inputValues.cardName,
-        link: inputValues.link
-    },
-        cardTemplate,
-        handleCardClick);
-
-    const cardElement = newCard.generateCard();
-    cardList.addItem(cardElement);
+    api.addCard(inputValues.cardName, inputValues.link)
+        .then(data => {
+            const newCard = new Card({
+                name: data.name,
+                link: data.link
+            },
+                cardTemplate,
+                handleCardClick);
+            const cardElement = newCard.generateCard();
+            cardList.addItem(cardElement);
+        })
 };
 
 // Карточка профиля
 const userInfo = new UserInfo({ nameSelector, jobSelector, avatarSelector });
 
 // Первоначальное заполнение профиля
-api.getUserInfo().then(data =>{
-    const {name, about, avatar} = data;
+api.getUserInfo().then(data => {
+    const { name, about, avatar } = data;
     userInfo.setUserInfo(name, about, avatar);
 })
 
@@ -79,7 +81,8 @@ const cardList = new Section({
     renderer: (cardItem) => {
         const newCard = new Card(cardItem, cardTemplate, handleCardClick);
         const cardElement = newCard.generateCard();
-        cardList.addItem(cardElement);
+        const cardElements = document.querySelector(cardListSelector);
+        cardElements.append(cardElement);
     }
 }, cardListSelector);
 

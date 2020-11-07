@@ -19,7 +19,7 @@ class Api {
             }
             return res.json();
         }).then(data => {
-            return data
+            return data;
         }).catch(err => {
             console.log(`Error ${err}`)
         })
@@ -39,7 +39,7 @@ class Api {
             }
             return res.json();
         }).then(data => {
-            return data
+            return data;
         }).catch(err => {
             console.log(`Error ${err}`)
         })
@@ -57,7 +57,27 @@ class Api {
             }
             return res.json();
         }).then(data => {
-            return data
+            return data;
+        }).catch(err => {
+            console.log(`Error ${err}`)
+        })
+    }
+
+    addCard(name, link) {
+        return fetch(`${this._url}${this._cohort}/cards`, {
+            method: 'POST',
+            headers: {
+                'authorization': this._token,
+                'content-type': "application/json"
+            },
+            body: JSON.stringify({ name, link })
+        }).then(res => {
+            if (!res.ok) {
+                return Promise.reject('Server error');
+            }
+            return res.json();
+        }).then(data => {
+            return data;
         }).catch(err => {
             console.log(`Error ${err}`)
         })
