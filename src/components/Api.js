@@ -102,6 +102,43 @@ class Api {
         })
     }
 
+    setLike(cardId) {
+        return fetch(`${this._url}${this._cohort}/cards/likes/${cardId}`, {
+            method: 'PUT',
+            headers: {
+                'authorization': this._token,
+                'content-type': "application/json"
+            }
+        }).then(res => {
+            if (!res.ok) {
+                return Promise.reject('Server error');
+            }
+            return res.json();
+        }).then(data => {
+            return data;
+        }).catch(err => {
+            console.log(`Error ${err}`)
+        })
+    }
+
+    removeLike(cardId) {
+        return fetch(`${this._url}${this._cohort}/cards/likes/${cardId}`, {
+            method: 'DELETE',
+            headers: {
+                'authorization': this._token,
+                'content-type': "application/json"
+            }
+        }).then(res => {
+            if (!res.ok) {
+                return Promise.reject('Server error');
+            }
+            return res.json();
+        }).then(data => {
+            return data;
+        }).catch(err => {
+            console.log(`Error ${err}`)
+        })
+    }
 }
 
 export default Api;

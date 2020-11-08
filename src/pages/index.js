@@ -19,6 +19,7 @@ import {
     avatarSelector,
     editButton,
     addCardButton,
+    buttonLikeClass,
     nameInput,
     jobInput,
     cohort,
@@ -42,10 +43,10 @@ const handlePopupProfileSubmit = (inputValues) => {
 // Колбэк удаления карточки
 const handleCardDelete = (cardId, parentElement) => {
     api.deleteCard(cardId)
-    .then(data => {
-        parentElement.remove();
-        return data;
-    })
+        .then(data => {
+            parentElement.remove();
+            return data;
+        })
 }
 
 // Колбэк открытия карточки места по клику на нее
@@ -53,8 +54,19 @@ const handleCardClick = (elementPhoto) => {
     popupWithImage.open(elementPhoto);
 }
 
+// Колбэк открытия формы подтверждения удаления собственной карточки
 const handleCardClickTrash = (cardId, parentElement) => {
     popupDeleteConfirm.open(cardId, parentElement);
+}
+
+// Колбэк нажатия на кнопку лайк
+const handleButtonLikeClick = (evt, cardId) => {
+    const eventTarget = evt.target;
+    if (eventTarget.classList.contains(buttonLikeClass)) {
+        return api.removeLike(cardId);
+    } else {
+        return api.setLike(cardId);
+    }
 }
 
 // Колбэк добавляет новую карточку на форму
@@ -64,14 +76,15 @@ const handlePopupMestoSubmit = (inputValues) => {
             const newCard = new Card({
                 name: data.name,
                 link: data.link,
-                likes: data.likes.length,
+                likes: data.likes,
                 id: data._id,
                 ownerId: data.owner._id
             },
                 userId,
                 cardTemplate,
                 handleCardClick,
-                handleCardClickTrash);
+                handleCardClickTrash,
+                handleButtonLikeClick);
             const cardElement = newCard.generateCard();
             cardList.addItem(cardElement);
         })
@@ -106,7 +119,7 @@ popupNewCard.setEventListeners();
 // Создаем секцию с карточками
 const cardList = new Section({
     renderer: (cardItem) => {
-        const newCard = new Card(cardItem, userId, cardTemplate, handleCardClick, handleCardClickTrash);
+        const newCard = new Card(cardItem, userId, cardTemplate, handleCardClick, handleCardClickTrash, handleButtonLikeClick);
         const cardElement = newCard.generateCard();
         const cardElements = document.querySelector(cardListSelector);
         cardElements.append(cardElement);
@@ -119,7 +132,7 @@ api.getInitialCards().then(data => {
         return {
             name: card.name,
             link: card.link,
-            likes: card.likes.length,
+            likes: card.likes,
             id: card._id,
             ownerId: card.owner._id
         }
