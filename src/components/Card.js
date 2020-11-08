@@ -63,7 +63,6 @@ class Card {
     }
 
     _setElements() {
-
         this._likesCount = this._element.querySelector('.element__likes');
         this._likeButton = this._element.querySelector('.element__button-like');
         this._elementName = this._element.querySelector('.element__info-name');
