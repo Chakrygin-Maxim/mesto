@@ -20,14 +20,26 @@ class PopupWithForm extends Popup {
 
     _handleSubmit(evt) {
         evt.preventDefault();
-        const inputValues = this._getInputValues();
-        this._formSubmitHandler(inputValues);
+
+        if (this._cardId) {
+            this._formSubmitHandler(this._cardId, this._parentElement);
+        } else {
+            const inputValues = this._getInputValues();
+            this._formSubmitHandler(inputValues);
+        }
+
         this.close();
     };
 
     setEventListeners() {
         super.setEventListeners();
         this._popup.addEventListener('submit', this._handleSubmit);
+    }
+
+    open(cardId, parentElement) {
+        super.open();
+        this._cardId = cardId;
+        this._parentElement = parentElement;
     }
 
     close() {

@@ -12,6 +12,7 @@ export const cardListSelector = '.elements';
 export const formProfileSelector = '.popup_form_profile';
 export const formMestoSelector = '.popup_form_mesto';
 export const formPhotoSelector = '.popup_form_photo';
+export const formDeleteConfirmSelector = '.popup_form_confirm'; 
 export const nameSelector = '.profile__name';
 export const jobSelector = '.profile__job';
 export const avatarSelector = '.profile__image';

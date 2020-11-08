@@ -82,6 +82,26 @@ class Api {
             console.log(`Error ${err}`)
         })
     }
+
+    deleteCard(cardId) {
+        return fetch(`${this._url}${this._cohort}/cards/${cardId}`, {
+            method: 'DELETE',
+            headers: {
+                'authorization': this._token,
+                'content-type': "application/json"
+            }
+        }).then(res => {
+            if (!res.ok) {
+                return Promise.reject('Server error');
+            }
+            return res.json();
+        }).then(data => {
+            return data;
+        }).catch(err => {
+            console.log(`Error ${err}`)
+        })
+    }
+
 }
 
 export default Api;

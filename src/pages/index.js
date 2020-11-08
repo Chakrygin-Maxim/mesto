@@ -13,6 +13,7 @@ import {
     formProfileSelector,
     formMestoSelector,
     formPhotoSelector,
+    formDeleteConfirmSelector,
     nameSelector,
     jobSelector,
     avatarSelector,
@@ -27,6 +28,9 @@ import {
 // Инициализация API
 const api = new Api(token, cohort);
 
+// Переменная для хранения ID usera для отображения кнопки удаления карточки
+let userId = '';
+
 // Колбэк установки нового имени и должности профиля
 const handlePopupProfileSubmit = (inputValues) => {
     api.updateUserInfo(inputValues.name, inputValues.job)
@@ -35,9 +39,22 @@ const handlePopupProfileSubmit = (inputValues) => {
         })
 };
 
+// Колбэк удаления карточки
+const handleCardDelete = (cardId, parentElement) => {
+    api.deleteCard(cardId)
+    .then(data => {
+        parentElement.remove();
+        return data;
+    })
+}
+
 // Колбэк открытия карточки места по клику на нее
 const handleCardClick = (elementPhoto) => {
     popupWithImage.open(elementPhoto);
+}
+
+const handleCardClickTrash = (cardId, parentElement) => {
+    popupDeleteConfirm.open(cardId, parentElement);
 }
 
 // Колбэк добавляет новую карточку на форму
@@ -47,10 +64,14 @@ const handlePopupMestoSubmit = (inputValues) => {
             const newCard = new Card({
                 name: data.name,
                 link: data.link,
-                likes: data.likes.length
+                likes: data.likes.length,
+                id: data._id,
+                ownerId: data.owner._id
             },
+                userId,
                 cardTemplate,
-                handleCardClick);
+                handleCardClick,
+                handleCardClickTrash);
             const cardElement = newCard.generateCard();
             cardList.addItem(cardElement);
         })
@@ -61,8 +82,9 @@ const userInfo = new UserInfo({ nameSelector, jobSelector, avatarSelector });
 
 // Первоначальное заполнение профиля
 api.getUserInfo().then(data => {
-    const { name, about, avatar } = data;
-    userInfo.setUserInfo(name, about, avatar);
+    const { name, about, avatar, _id } = data;
+    userInfo.setUserInfo(name, about, _id, avatar);
+    userId = _id;
 })
 
 // Попап с картинкой
@@ -73,6 +95,10 @@ popupWithImage.setEventListeners();
 const popupEditProfile = new PopupWithForm(handlePopupProfileSubmit, formProfileSelector);
 popupEditProfile.setEventListeners();
 
+// Попап подверждение удаления
+const popupDeleteConfirm = new PopupWithForm(handleCardDelete, formDeleteConfirmSelector);
+popupDeleteConfirm.setEventListeners();
+
 // Попап добавление карточки
 const popupNewCard = new PopupWithForm(handlePopupMestoSubmit, formMestoSelector);
 popupNewCard.setEventListeners();
@@ -80,7 +106,7 @@ popupNewCard.setEventListeners();
 // Создаем секцию с карточками
 const cardList = new Section({
     renderer: (cardItem) => {
-        const newCard = new Card(cardItem, cardTemplate, handleCardClick);
+        const newCard = new Card(cardItem, userId, cardTemplate, handleCardClick, handleCardClickTrash);
         const cardElement = newCard.generateCard();
         const cardElements = document.querySelector(cardListSelector);
         cardElements.append(cardElement);
@@ -93,7 +119,9 @@ api.getInitialCards().then(data => {
         return {
             name: card.name,
             link: card.link,
-            likes: card.likes.length
+            likes: card.likes.length,
+            id: card._id,
+            ownerId: card.owner._id
         }
     })
     cardList.renderItems(items);

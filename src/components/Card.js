@@ -1,11 +1,15 @@
 class Card {
 
-    constructor(item, templateSelector, openPopupPhotoHandler) {
+    constructor(item, userId, templateSelector, openPopupPhotoHandler, openPopupDeleteConfirmHandler) {
         this._name = item.name;
         this._link = item.link;
         this._likes = item.likes;
+        this._cardId = item.id;
+        this._ownerId = item.ownerId;
+        this._userId = userId;
         this._templateSelector = templateSelector;
         this._openPopupPhotoHandler = openPopupPhotoHandler;
+        this._openPopupDeleteConfirmHandler = openPopupDeleteConfirmHandler;
     }
  
     _getTemplate() {
@@ -28,8 +32,8 @@ class Card {
             });
 
         this._element.querySelector('.element__button-trash')
-            .addEventListener('click', evt => {
-                evt.target.parentElement.remove();
+            .addEventListener('click', (evt) => {
+                this._openPopupDeleteConfirmHandler(this._cardId, evt.target.parentElement);
             });
     }
 
@@ -43,6 +47,10 @@ class Card {
 
         this._element.querySelector('.element__info-name').textContent = this._name;
         this._element.querySelector('.element__likes').textContent = this._likes;
+
+        if (this._userId === this._ownerId) {
+            this._element.querySelector('.element__button-trash').classList.add('button-trash_visible');
+        }
 
         return this._element;
     }
