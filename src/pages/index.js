@@ -46,7 +46,8 @@ const handlePopupMestoSubmit = (inputValues) => {
         .then(data => {
             const newCard = new Card({
                 name: data.name,
-                link: data.link
+                link: data.link,
+                likes: data.likes.length
             },
                 cardTemplate,
                 handleCardClick);
@@ -91,7 +92,8 @@ api.getInitialCards().then(data => {
     const items = data.map(card => {
         return {
             name: card.name,
-            link: card.link
+            link: card.link,
+            likes: card.likes.length
         }
     })
     cardList.renderItems(items);

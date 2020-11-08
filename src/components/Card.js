@@ -3,6 +3,7 @@ class Card {
     constructor(item, templateSelector, openPopupPhotoHandler) {
         this._name = item.name;
         this._link = item.link;
+        this._likes = item.likes;
         this._templateSelector = templateSelector;
         this._openPopupPhotoHandler = openPopupPhotoHandler;
     }
@@ -41,6 +42,7 @@ class Card {
         cardPhoto.alt = this._name;
 
         this._element.querySelector('.element__info-name').textContent = this._name;
+        this._element.querySelector('.element__likes').textContent = this._likes;
 
         return this._element;
     }
