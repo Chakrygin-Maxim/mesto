@@ -1,10 +1,8 @@
 class Api {
-
     constructor(token, cohort) {
         this._token = token;
         this._cohort = cohort;
         this._url = "https://mesto.nomoreparties.co/v1/";
-
     }
 
     getUserInfo() {
@@ -15,7 +13,7 @@ class Api {
             }
         }).then(res => {
             if (!res.ok) {
-                return Promise.reject('Server error');
+                return Promise.reject(`Ошибка: ${res.status}`);
             }
             return res.json();
         }).then(data => {
@@ -35,7 +33,7 @@ class Api {
             body: JSON.stringify({ name, about })
         }).then(res => {
             if (!res.ok) {
-                return Promise.reject('Server error');
+                return Promise.reject(`Ошибка: ${res.status}`);
             }
             return res.json();
         }).then(data => {
@@ -53,7 +51,7 @@ class Api {
             }
         }).then(res => {
             if (!res.ok) {
-                return Promise.reject('Server error');
+                return Promise.reject(`Ошибка: ${res.status}`);
             }
             return res.json();
         }).then(data => {
@@ -73,7 +71,7 @@ class Api {
             body: JSON.stringify({ name, link })
         }).then(res => {
             if (!res.ok) {
-                return Promise.reject('Server error');
+                return Promise.reject(`Ошибка: ${res.status}`);
             }
             return res.json();
         }).then(data => {
@@ -92,7 +90,7 @@ class Api {
             }
         }).then(res => {
             if (!res.ok) {
-                return Promise.reject('Server error');
+                return Promise.reject(`Ошибка: ${res.status}`);
             }
             return res.json();
         }).then(data => {
@@ -111,7 +109,7 @@ class Api {
             }
         }).then(res => {
             if (!res.ok) {
-                return Promise.reject('Server error');
+                return Promise.reject(`Ошибка: ${res.status}`);
             }
             return res.json();
         }).then(data => {
@@ -130,7 +128,27 @@ class Api {
             }
         }).then(res => {
             if (!res.ok) {
-                return Promise.reject('Server error');
+                return Promise.reject(`Ошибка: ${res.status}`);
+            }
+            return res.json();
+        }).then(data => {
+            return data;
+        }).catch(err => {
+            console.log(`Error ${err}`)
+        })
+    }
+
+    updateAvatar(avatar) {
+        return fetch(`${this._url}${this._cohort}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: {
+                'authorization': this._token,
+                'content-type': "application/json"
+            },
+            body: JSON.stringify({ avatar })
+        }).then(res => {
+            if (!res.ok) {
+                return Promise.reject(`Ошибка: ${res.status}`);
             }
             return res.json();
         }).then(data => {

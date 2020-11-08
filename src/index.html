@@ -55,6 +55,17 @@
         </form>
     </section>
 
+    <section class="popup popup_form_avatar">
+        <form class="popup__form" action="popup-avatar-submit" name="formAvatar" novalidate>
+            <h2 class="popup__title">Обновить аватар</h2>
+            <input name="avatarLink" type="url" class="popup__input popup__input_field_avatarLink" id="avatarLink-input"
+                placeholder="Ссылка на аватар" required>
+            <span class="popup__input-error" id="avatarLink-input-error"></span>
+            <button type="submit" value="Сохранить" class="popup__button">Сохранить</button>
+            <button class="popup__button-close" type="button"></button>
+        </form>
+    </section>
+
     <section class="popup popup_form_mesto">
         <form class="popup__form" action="popup-mesto-submit" name="formNewCard" novalidate>
             <h2 class="popup__title">Новое место</h2>

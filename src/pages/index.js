@@ -11,6 +11,7 @@ import {
     cardTemplate,
     cardListSelector,
     formProfileSelector,
+    formProfileAvatar,
     formMestoSelector,
     formPhotoSelector,
     formDeleteConfirmSelector,
@@ -19,6 +20,7 @@ import {
     avatarSelector,
     editButton,
     addCardButton,
+    editAvatarButton,
     buttonLikeClass,
     nameInput,
     jobInput,
@@ -36,9 +38,17 @@ let userId = '';
 const handlePopupProfileSubmit = (inputValues) => {
     api.updateUserInfo(inputValues.name, inputValues.job)
         .then(data => {
-            userInfo.setUserInfo(data.name, data.about)
+            userInfo.setUserInfo(data.name, data.about);
         })
 };
+
+const handlePopupAvatarEdit = (inputValues) => {
+    api.updateAvatar(inputValues.avatarLink)
+        .then(data => {
+            debugger
+            userInfo.setUserInfo(data.name, data.about, data._id, data.avatar);
+        })
+}
 
 // Колбэк удаления карточки
 const handleCardDelete = (cardId, parentElement) => {
@@ -108,6 +118,10 @@ popupWithImage.setEventListeners();
 const popupEditProfile = new PopupWithForm(handlePopupProfileSubmit, formProfileSelector);
 popupEditProfile.setEventListeners();
 
+// Попап изменение профиля
+const popupEditAvatar = new PopupWithForm(handlePopupAvatarEdit, formProfileAvatar);
+popupEditAvatar.setEventListeners();
+
 // Попап подверждение удаления
 const popupDeleteConfirm = new PopupWithForm(handleCardDelete, formDeleteConfirmSelector);
 popupDeleteConfirm.setEventListeners();
@@ -155,6 +169,11 @@ addCardButton.addEventListener('click', () => {
     popupNewCard.open();
 });
 
+// Открывает форму изменения аватара пользователя
+editAvatarButton.addEventListener('click', () => {
+    popupEditAvatar.open();
+})
+
 // Включает валидацию формы профиля
 const profileValidation = new FormValidator(validationItems, document.forms.formProfile);
 profileValidation.enableValidation();
@@ -162,3 +181,7 @@ profileValidation.enableValidation();
 // Включает валидацию формы ввода новой карточки
 const newCardValidation = new FormValidator(validationItems, document.forms.formNewCard);
 newCardValidation.enableValidation();
+
+// Включает валидацию формы ввода новой карточки
+const avatarValidation = new FormValidator(validationItems, document.forms.formAvatar);
+avatarValidation.enableValidation();
