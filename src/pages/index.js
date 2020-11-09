@@ -36,14 +36,15 @@ let userId = '';
 
 // Колбэк установки нового имени и должности профиля
 const handlePopupProfileSubmit = (inputValues) => {
-    api.updateUserInfo(inputValues.name, inputValues.job)
+    return api.updateUserInfo(inputValues.name, inputValues.job)
         .then(data => {
             userInfo.setUserInfo(data.name, data.about);
         })
 };
 
+// Колбэк сохранение нового аватара пользователя
 const handlePopupAvatarEdit = (inputValues) => {
-    api.updateAvatar(inputValues.avatarLink)
+    return api.updateAvatar(inputValues.avatarLink)
         .then(data => {
             debugger
             userInfo.setUserInfo(data.name, data.about, data._id, data.avatar);
@@ -52,7 +53,7 @@ const handlePopupAvatarEdit = (inputValues) => {
 
 // Колбэк удаления карточки
 const handleCardDelete = (cardId, parentElement) => {
-    api.deleteCard(cardId)
+    return api.deleteCard(cardId)
         .then(data => {
             parentElement.remove();
             return data;
@@ -81,7 +82,7 @@ const handleButtonLikeClick = (evt, cardId) => {
 
 // Колбэк добавляет новую карточку на форму
 const handlePopupMestoSubmit = (inputValues) => {
-    api.addCard(inputValues.cardName, inputValues.link)
+    return api.addCard(inputValues.cardName, inputValues.link)
         .then(data => {
             const newCard = new Card({
                 name: data.name,
