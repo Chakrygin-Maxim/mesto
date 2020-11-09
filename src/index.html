@@ -20,7 +20,9 @@
 
     <section class="profile">
         <div class="profile__main-container">
-            <img src="../src/images/__image.jpg" alt="Аватар" class="profile__image">
+            <div class="profile__image-container">
+                <img src="../src/images/__image.jpg" alt="Аватар" class="profile__image">
+            </div>
             <div class="profile__info">
                 <div class="profile__name-container">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -53,6 +55,17 @@
         </form>
     </section>
 
+    <section class="popup popup_form_avatar">
+        <form class="popup__form" action="popup-avatar-submit" name="formAvatar" novalidate>
+            <h2 class="popup__title">Обновить аватар</h2>
+            <input name="avatarLink" type="url" class="popup__input popup__input_field_avatarLink" id="avatarLink-input"
+                placeholder="Ссылка на аватар" required>
+            <span class="popup__input-error" id="avatarLink-input-error"></span>
+            <button type="submit" value="Сохранить" class="popup__button">Сохранить</button>
+            <button class="popup__button-close" type="button"></button>
+        </form>
+    </section>
+
     <section class="popup popup_form_mesto">
         <form class="popup__form" action="popup-mesto-submit" name="formNewCard" novalidate>
             <h2 class="popup__title">Новое место</h2>
@@ -75,13 +88,24 @@
         </figure>
     </section>
 
+    <section class="popup popup_form_confirm">
+        <form class="popup__form" action="popup-profile-confirm" name="formConfirm" novalidate>
+            <h2 class="popup__title">Вы уверены?</h2>
+            <button type="submit" value="Сохранить" class="popup__button">Да</button>
+            <button class="popup__button-close" type="button"></button>
+        </form>
+    </section>
+
     <template id="element-template">
         <article class="element">
             <img class="element__photo">
             <button class="element__button-trash"></button>
             <div class="element__info">
                 <h2 class="element__info-name"></h2>
-                <button class="element__button-like" type="button"></button>
+                <div class="element__like-container">
+                    <button class="element__button-like" type="button"></button>
+                    <p class="element__likes"></p>
+                </div>
             </div>
         </article>
     </template>

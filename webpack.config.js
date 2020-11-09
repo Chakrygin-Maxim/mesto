@@ -43,10 +43,6 @@ module.exports = {
                 loader: 'html-loader',
             },
             {
-                test: /\.(woff|woff2|ttf|eot)$/, // Загрузчик для шрифтов
-                use: 'file-loader'
-            },
-            {
                 test: /\.css$/i, // Загрузчик css
                 use: [
                     MiniCssExtractPlugin.loader,
