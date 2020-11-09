@@ -4,6 +4,7 @@ class Popup {
         this._popup = document.querySelector(popupSelector);
         this._handleButtonClose = this._handleButtonClose.bind(this);
         this._handleEscClose = this._handleEscClose.bind(this);
+        this._handleCloseByClickOnOverlay = this._handleCloseByClickOnOverlay.bind(this);
     }
 
     _handleEscClose(evt) {
@@ -13,13 +14,20 @@ class Popup {
     }
 
     _handleButtonClose(evt) {
-        if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__button-close')) {
+        if (evt.target.classList.contains('popup__button-close')) {
             this.close();
         }
     }
 
+    _handleCloseByClickOnOverlay(evt) {
+        if (evt.target === evt.currentTarget) {
+            this.close();
+        }
+    };
+
     _addEventListeners() {
         this._popup.addEventListener('click', this._handleButtonClose);
+        this._popup.addEventListener('mousedown', this._handleCloseByClickOnOverlay);
         document.addEventListener('keydown', this._handleEscClose);
     }
 

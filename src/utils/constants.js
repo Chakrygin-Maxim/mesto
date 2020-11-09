@@ -1,30 +1,3 @@
-export const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
-
 export const validationItems = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
@@ -37,12 +10,19 @@ export const validationItems = {
 export const cardTemplate = '#element-template';
 export const cardListSelector = '.elements';
 export const formProfileSelector = '.popup_form_profile';
+export const formProfileAvatar = '.popup_form_avatar';
 export const formMestoSelector = '.popup_form_mesto';
 export const formPhotoSelector = '.popup_form_photo';
+export const formDeleteConfirmSelector = '.popup_form_confirm'; 
 export const nameSelector = '.profile__name';
 export const jobSelector = '.profile__job';
+export const avatarSelector = '.profile__image';
 export const editButton = document.querySelector('.profile__button-edit');
 export const addCardButton = document.querySelector('.profile__button-add');
+export const editAvatarButton = document.querySelector('.profile__image-container');
+export const buttonLikeClass = 'element__button-like_status_liked';
+export const token = '8a14ceb3-7392-4a44-a6bb-8080b9aa5657';
+export const cohort = 'cohort-17';
 
 const popupProfile = document.querySelector(formProfileSelector);
 export const nameInput = popupProfile.querySelector('.popup__input_field_name');
