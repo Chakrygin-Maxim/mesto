@@ -5,22 +5,20 @@ class Api {
         this._url = "https://mesto.nomoreparties.co/v1/";
     }
 
+    _handleResponse(res) {
+        if (!res.ok) {
+            return Promise.reject(`Ошибка: ${res.status}`);
+        }
+        return res.json();
+    }
+
     getUserInfo() {
         return fetch(`${this._url}${this._cohort}/users/me`, {
             headers: {
                 'authorization': this._token,
                 'content-type': "application/json"
             }
-        }).then(res => {
-            if (!res.ok) {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-            return res.json();
-        }).then(data => {
-            return data;
-        }).catch(err => {
-            console.log(`Error ${err}`)
-        })
+        }).then(this._handleResponse)
     }
 
     updateUserInfo(name, about) {
@@ -31,16 +29,7 @@ class Api {
                 'content-type': "application/json"
             },
             body: JSON.stringify({ name, about })
-        }).then(res => {
-            if (!res.ok) {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-            return res.json();
-        }).then(data => {
-            return data;
-        }).catch(err => {
-            console.log(`Error ${err}`)
-        })
+        }).then(this._handleResponse)
     }
 
     getInitialCards() {
@@ -49,16 +38,7 @@ class Api {
                 'authorization': this._token,
                 'content-type': "application/json"
             }
-        }).then(res => {
-            if (!res.ok) {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-            return res.json();
-        }).then(data => {
-            return data;
-        }).catch(err => {
-            console.log(`Error ${err}`)
-        })
+        }).then(this._handleResponse)
     }
 
     addCard(name, link) {
@@ -69,16 +49,7 @@ class Api {
                 'content-type': "application/json"
             },
             body: JSON.stringify({ name, link })
-        }).then(res => {
-            if (!res.ok) {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-            return res.json();
-        }).then(data => {
-            return data;
-        }).catch(err => {
-            console.log(`Error ${err}`)
-        })
+        }).then(this._handleResponse)
     }
 
     deleteCard(cardId) {
@@ -88,16 +59,7 @@ class Api {
                 'authorization': this._token,
                 'content-type': "application/json"
             }
-        }).then(res => {
-            if (!res.ok) {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-            return res.json();
-        }).then(data => {
-            return data;
-        }).catch(err => {
-            console.log(`Error ${err}`)
-        })
+        }).then(this._handleResponse)
     }
 
     setLike(cardId) {
@@ -107,16 +69,7 @@ class Api {
                 'authorization': this._token,
                 'content-type': "application/json"
             }
-        }).then(res => {
-            if (!res.ok) {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-            return res.json();
-        }).then(data => {
-            return data;
-        }).catch(err => {
-            console.log(`Error ${err}`)
-        })
+        }).then(this._handleResponse)
     }
 
     removeLike(cardId) {
@@ -126,16 +79,7 @@ class Api {
                 'authorization': this._token,
                 'content-type': "application/json"
             }
-        }).then(res => {
-            if (!res.ok) {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-            return res.json();
-        }).then(data => {
-            return data;
-        }).catch(err => {
-            console.log(`Error ${err}`)
-        })
+        }).then(this._handleResponse)
     }
 
     updateAvatar(avatar) {
@@ -146,16 +90,7 @@ class Api {
                 'content-type': "application/json"
             },
             body: JSON.stringify({ avatar })
-        }).then(res => {
-            if (!res.ok) {
-                return Promise.reject(`Ошибка: ${res.status}`);
-            }
-            return res.json();
-        }).then(data => {
-            return data;
-        }).catch(err => {
-            console.log(`Error ${err}`)
-        })
+        }).then(this._handleResponse)
     }
 }
 
