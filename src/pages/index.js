@@ -102,14 +102,14 @@ const handlePopupMestoSubmit = (inputValues) => {
 const userInfo = new UserInfo({ nameSelector, jobSelector, avatarSelector });
 
 // Первоначальное заполнение профиля
-setUserInfo = (userData) => {
+const setUserInfo = (userData) => {
   const { name, about, avatar, _id } = userData;
   userInfo.setUserInfo(name, about, _id, avatar);
   userId = _id;
 };
 
 // Первоначальное заполнение карточек
-setInitialCads = (initialCards) => {
+const setInitialCads = (initialCards) => {
   const items = initialCards.map((card) => {
     return {
       name: card.name,
