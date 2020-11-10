@@ -46,7 +46,6 @@ const handlePopupProfileSubmit = (inputValues) => {
 const handlePopupAvatarEdit = (inputValues) => {
     return api.updateAvatar(inputValues.avatarLink)
         .then(data => {
-            debugger
             userInfo.setUserInfo(data.name, data.about, data._id, data.avatar);
         })
 }

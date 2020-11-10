@@ -28,14 +28,15 @@ class Popup {
     _addEventListeners() {
         this._popup.addEventListener('click', this._handleButtonClose);
         this._popup.addEventListener('mousedown', this._handleCloseByClickOnOverlay);
-        document.addEventListener('keydown', this._handleEscClose);
     }
 
     open() {
+        document.addEventListener('keydown', this._handleEscClose);
         this._popup.classList.add('popup_opened');
     }
 
     close() {
+        document.removeEventListener('keydown', this._handleEscClose);
         this._popup.classList.remove('popup_opened');
     }
 
