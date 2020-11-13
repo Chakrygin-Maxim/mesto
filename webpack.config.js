@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PrettierPlugin = require("prettier-webpack-plugin");
 
 module.exports = {
   entry: { main: "./src/pages/index.js" },
@@ -66,6 +67,15 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({ template: "./src/index.html" }),
     new MiniCssExtractPlugin(),
+    new PrettierPlugin({
+      printWidth: 100,
+      singleQuote: true,
+      trailingComma: "all",
+      bracketSpacing: true,
+      jsxBracketSameLine: false,
+      tabWidth: 2,
+      semi: true,
+    }),
   ],
   devtool: "inline-source-map",
 };

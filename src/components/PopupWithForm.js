@@ -1,13 +1,13 @@
-import Popup from "./Popup.js";
+import Popup from './Popup.js';
 
 class PopupWithForm extends Popup {
   constructor(formSubmitHandler, popupSelector) {
     super(popupSelector);
     this._formSubmitHandler = formSubmitHandler;
-    this._inputList = this._popup.querySelectorAll(".popup__input");
-    this._popupForm = this._popup.querySelector(".popup__form");
+    this._inputList = this._popup.querySelectorAll('.popup__input');
+    this._popupForm = this._popup.querySelector('.popup__form');
     this._handleSubmit = this._handleSubmit.bind(this);
-    this._buttonSubmit = this._popup.querySelector(".popup__button");
+    this._buttonSubmit = this._popup.querySelector('.popup__button');
   }
 
   _getInputValues() {
@@ -25,12 +25,11 @@ class PopupWithForm extends Popup {
     const buttonSubmitName = this._buttonSubmit.textContent;
 
     new Promise((resolve) => {
-      this._buttonSubmit.textContent = "Сохранение...";
+      this._buttonSubmit.textContent = 'Сохранение...';
       const inputValues = this._getInputValues();
       resolve(inputValues);
     })
       .then((inputValues) => {
-          
         // Ставим в очередь промис Api и ждем его выполнения
         // для возвращения кнопки сабмит к первоначалному виду
         if (this._cardId) {
@@ -50,7 +49,7 @@ class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    this._popup.addEventListener("submit", this._handleSubmit);
+    this._popup.addEventListener('submit', this._handleSubmit);
   }
 
   open(cardId, parentElement) {

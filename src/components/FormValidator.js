@@ -1,13 +1,7 @@
 class FormValidator {
   constructor(
-    {
-      inputSelector,
-      submitButtonSelector,
-      inactiveButtonClass,
-      inputErrorClass,
-      errorClass,
-    },
-    validationForm
+    { inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass },
+    validationForm,
   ) {
     this._inputSelector = inputSelector;
     this._submitButtonSelector = submitButtonSelector;
@@ -15,9 +9,7 @@ class FormValidator {
     this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
     this._validationForm = validationForm;
-    this._buttonElement = this._validationForm.querySelector(
-      this._submitButtonSelector
-    );
+    this._buttonElement = this._validationForm.querySelector(this._submitButtonSelector);
   }
 
   // Проверяем что хотябы одно воле не валидно
@@ -48,9 +40,7 @@ class FormValidator {
 
   // Отображаем поля с ошибками
   _showInputError(inputElement, errorMessage) {
-    const errorElement = this._validationForm.querySelector(
-      `#${inputElement.id}-error`
-    );
+    const errorElement = this._validationForm.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.add(this._inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(this._errorClass);
@@ -58,12 +48,10 @@ class FormValidator {
 
   // Скрываем поля с ошибками
   _hideInputError(inputElement) {
-    const errorElement = this._validationForm.querySelector(
-      `#${inputElement.id}-error`
-    );
+    const errorElement = this._validationForm.querySelector(`#${inputElement.id}-error`);
     inputElement.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
-    errorElement.textContent = "";
+    errorElement.textContent = '';
   }
 
   // Проверям форму на валидность полей
@@ -77,21 +65,19 @@ class FormValidator {
 
   // Установка слушателей у полей ввода
   _setEventListeners() {
-    const inputList = Array.from(
-      this._validationForm.querySelectorAll(this._inputSelector)
-    );
+    const inputList = Array.from(this._validationForm.querySelectorAll(this._inputSelector));
 
     this._toggleButtonState(inputList);
 
     inputList.forEach((inputElement) => {
-      inputElement.addEventListener("input", () => {
+      inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
         this._toggleButtonState(inputList);
       });
     });
 
     // После сабмита откючаем кнопку. Это нужно после добавление новой каточки.
-    this._validationForm.addEventListener("submit", () => {
+    this._validationForm.addEventListener('submit', () => {
       this._disableSubmitButton();
     });
   }

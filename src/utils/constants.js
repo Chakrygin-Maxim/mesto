@@ -1,10 +1,10 @@
 export const validationItems = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__error_visible'
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
 };
 
 export const cardTemplate = '#element-template';
@@ -13,7 +13,7 @@ export const formProfileSelector = '.popup_form_profile';
 export const formProfileAvatar = '.popup_form_avatar';
 export const formMestoSelector = '.popup_form_mesto';
 export const formPhotoSelector = '.popup_form_photo';
-export const formDeleteConfirmSelector = '.popup_form_confirm'; 
+export const formDeleteConfirmSelector = '.popup_form_confirm';
 export const nameSelector = '.profile__name';
 export const jobSelector = '.profile__job';
 export const avatarSelector = '.profile__image';

@@ -1,11 +1,11 @@
-import "./index.css";
-import Card from "../components/Card.js";
-import FormValidator from "../components/FormValidator.js";
-import Section from "../components/Section.js";
-import PopupWithImage from "../components/PopupWithImage.js";
-import PopupWithForm from "../components/PopupWithForm.js";
-import UserInfo from "../components/UserInfo.js";
-import Api from "../components/Api.js";
+import './index.css';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 import {
   validationItems,
   cardTemplate,
@@ -26,13 +26,13 @@ import {
   jobInput,
   cohort,
   token,
-} from "../utils/constants.js";
+} from '../utils/constants.js';
 
 // Инициализация API
 const api = new Api(token, cohort);
 
 // Переменная для хранения ID usera для отображения кнопки удаления карточки
-let userId = "";
+let userId = '';
 
 // Колбэк установки нового имени и должности профиля
 const handlePopupProfileSubmit = (inputValues) => {
@@ -91,7 +91,7 @@ const handlePopupMestoSubmit = (inputValues) => {
       cardTemplate,
       handleCardClick,
       handleCardClickTrash,
-      handleButtonLikeClick
+      handleButtonLikeClick,
     );
     const cardElement = newCard.generateCard();
     cardList.addItem(cardElement);
@@ -137,31 +137,19 @@ const popupWithImage = new PopupWithImage(formPhotoSelector);
 popupWithImage.setEventListeners();
 
 // Попап изменение профиля
-const popupEditProfile = new PopupWithForm(
-  handlePopupProfileSubmit,
-  formProfileSelector
-);
+const popupEditProfile = new PopupWithForm(handlePopupProfileSubmit, formProfileSelector);
 popupEditProfile.setEventListeners();
 
 // Попап изменение профиля
-const popupEditAvatar = new PopupWithForm(
-  handlePopupAvatarEdit,
-  formProfileAvatar
-);
+const popupEditAvatar = new PopupWithForm(handlePopupAvatarEdit, formProfileAvatar);
 popupEditAvatar.setEventListeners();
 
 // Попап подверждение удаления
-const popupDeleteConfirm = new PopupWithForm(
-  handleCardDelete,
-  formDeleteConfirmSelector
-);
+const popupDeleteConfirm = new PopupWithForm(handleCardDelete, formDeleteConfirmSelector);
 popupDeleteConfirm.setEventListeners();
 
 // Попап добавление карточки
-const popupNewCard = new PopupWithForm(
-  handlePopupMestoSubmit,
-  formMestoSelector
-);
+const popupNewCard = new PopupWithForm(handlePopupMestoSubmit, formMestoSelector);
 popupNewCard.setEventListeners();
 
 // Создаем секцию с карточками
@@ -174,18 +162,18 @@ const cardList = new Section(
         cardTemplate,
         handleCardClick,
         handleCardClickTrash,
-        handleButtonLikeClick
+        handleButtonLikeClick,
       );
       const cardElement = newCard.generateCard();
       const cardElements = document.querySelector(cardListSelector);
       cardElements.append(cardElement);
     },
   },
-  cardListSelector
+  cardListSelector,
 );
 
 // Открывает форму изменения данных профиля
-editButton.addEventListener("click", () => {
+editButton.addEventListener('click', () => {
   const profileData = userInfo.getUserInfo();
 
   nameInput.value = profileData.name;
@@ -195,32 +183,23 @@ editButton.addEventListener("click", () => {
 });
 
 // Открывает форму добавления новой карточки
-addCardButton.addEventListener("click", () => {
+addCardButton.addEventListener('click', () => {
   popupNewCard.open();
 });
 
 // Открывает форму изменения аватара пользователя
-editAvatarButton.addEventListener("click", () => {
+editAvatarButton.addEventListener('click', () => {
   popupEditAvatar.open();
 });
 
 // Включает валидацию формы профиля
-const profileValidation = new FormValidator(
-  validationItems,
-  document.forms.formProfile
-);
+const profileValidation = new FormValidator(validationItems, document.forms.formProfile);
 profileValidation.enableValidation();
 
 // Включает валидацию формы ввода новой карточки
-const newCardValidation = new FormValidator(
-  validationItems,
-  document.forms.formNewCard
-);
+const newCardValidation = new FormValidator(validationItems, document.forms.formNewCard);
 newCardValidation.enableValidation();
 
 // Включает валидацию формы ввода новой карточки
-const avatarValidation = new FormValidator(
-  validationItems,
-  document.forms.formAvatar
-);
+const avatarValidation = new FormValidator(validationItems, document.forms.formAvatar);
 avatarValidation.enableValidation();

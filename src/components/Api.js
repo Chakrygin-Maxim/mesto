@@ -2,7 +2,7 @@ class Api {
   constructor(token, cohort) {
     this._token = token;
     this._cohort = cohort;
-    this._url = "https://mesto.nomoreparties.co/v1/";
+    this._url = 'https://mesto.nomoreparties.co/v1/';
   }
 
   _handleResponse(res) {
@@ -16,17 +16,17 @@ class Api {
     return fetch(`${this._url}${this._cohort}/users/me`, {
       headers: {
         authorization: this._token,
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
     }).then(this._handleResponse);
   }
 
   updateUserInfo(name, about) {
     return fetch(`${this._url}${this._cohort}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
         authorization: this._token,
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
       body: JSON.stringify({ name, about }),
     }).then(this._handleResponse);
@@ -36,17 +36,17 @@ class Api {
     return fetch(`${this._url}${this._cohort}/cards`, {
       headers: {
         authorization: this._token,
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
     }).then(this._handleResponse);
   }
 
   addCard(name, link) {
     return fetch(`${this._url}${this._cohort}/cards`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         authorization: this._token,
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
       body: JSON.stringify({ name, link }),
     }).then(this._handleResponse);
@@ -54,40 +54,40 @@ class Api {
 
   deleteCard(cardId) {
     return fetch(`${this._url}${this._cohort}/cards/${cardId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
         authorization: this._token,
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
     }).then(this._handleResponse);
   }
 
   setLike(cardId) {
     return fetch(`${this._url}${this._cohort}/cards/likes/${cardId}`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
         authorization: this._token,
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
     }).then(this._handleResponse);
   }
 
   removeLike(cardId) {
     return fetch(`${this._url}${this._cohort}/cards/likes/${cardId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
         authorization: this._token,
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
     }).then(this._handleResponse);
   }
 
   updateAvatar(avatar) {
     return fetch(`${this._url}${this._cohort}/users/me/avatar`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
         authorization: this._token,
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
       body: JSON.stringify({ avatar }),
     }).then(this._handleResponse);

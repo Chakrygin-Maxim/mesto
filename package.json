@@ -7,6 +7,7 @@
     "build": "rimraf dist/* && webpack --mode development",
     "prod": "rimraf dist/* && webpack --mode production",
     "dev": "webpack-dev-server --open --watch",
+    "prettier": "prettier --write src/**/*.js",
     "predeploy": "npm run prod",
     "deploy": "gh-pages -d dist"
   },
@@ -33,6 +34,8 @@
     "html-webpack-plugin": "^4.5.0",
     "mini-css-extract-plugin": "^1.2.1",
     "postcss-loader": "^4.0.4",
+    "prettier": "^2.1.2",
+    "prettier-webpack-plugin": "^1.2.0",
     "webpack": "^5.2.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
